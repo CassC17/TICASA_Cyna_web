@@ -1,18 +1,1 @@
-{"type":"module",
-"main":"server.js",
-"scripts":
-{"dev":"nodemon --watch src -e js,ts,json --exec \"ts-node src/server.js\"",
-"build":"tsup src/index.ts --format cjs --clean",
-"start":"node dist/index.js"},
-
-"dependencies":
-{"express":"^4.21.2",
-"mongoose":"^8.9.5",
-"nodemon":"^3.1.9"},
-
-"devDependencies":
-{"@types/express":"^5.0.0",
-"@types/node":"^22.10.6",
-"ts-node":"^10.9.2",
-"tsup":"^8.3.5",
-"typescript":"^5.7.3"}}
+{"type":"module","main":"server.js","scripts":{"dev":"nodemon --watch src -e js,ts,json --exec \"ts-node src/server.js\"","build":"tsup src/index.ts --format cjs --clean","start":"node dist/index.js"},"dependencies":{"@prisma/client":"^6.4.1","express":"^4.21.2","mongoose":"^8.9.5","nodemon":"^3.1.9"},"devDependencies":{"@types/express":"^5.0.0","@types/node":"^22.10.6","prisma":"^6.4.1","ts-node":"^10.9.2","tsup":"^8.3.5","tsx":"^4.19.3","typescript":"^5.7.3"},"prisma":{"seed":"tsx ./prisma/seed.ts"}}
