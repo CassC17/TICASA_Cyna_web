@@ -9,10 +9,12 @@ datasource db {
 
 model User {
   id         Int         @id @default(autoincrement())
-  nom        String?     @db.VarChar(255)
-  prenom     String?     @db.VarChar(255)
-  isAdmin    Boolean?    @default(false)
-  isLoggedIn Boolean?    @default(false)
+  nom        String     @db.VarChar(255)
+  prenom     String     @db.VarChar(255)
+  email      String      @unique @db.VarChar(191)  
+  password   String      @db.VarChar(255)
+  isAdmin    Boolean    @default(false)
+  isLoggedIn Boolean    @default(false)
   basket     Basket[]
   userInfo   UserInfo[]
 }

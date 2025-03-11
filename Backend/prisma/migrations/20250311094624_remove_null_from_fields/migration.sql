@@ -1,11 +1,14 @@
 -- CreateTable
 CREATE TABLE `User` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `nom` VARCHAR(255) NULL,
-    `prenom` VARCHAR(255) NULL,
-    `isAdmin` BOOLEAN NULL DEFAULT false,
-    `isLoggedIn` BOOLEAN NULL DEFAULT false,
+    `nom` VARCHAR(255) NOT NULL,
+    `prenom` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `isAdmin` BOOLEAN NOT NULL DEFAULT false,
+    `isLoggedIn` BOOLEAN NOT NULL DEFAULT false,
 
+    UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
