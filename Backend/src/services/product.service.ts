@@ -22,4 +22,13 @@ export class ProductService {
 
     return ProductPresenter.toDTO(product);
   }
+
+  async updateProduct(id: number, data: Partial<ProductDTO>): Promise<ProductDTO | null> {
+    const product = await this.productRepository.updateProduct(id, data);
+    return product ? ProductPresenter.toDTO(product) : null;
+  }
+
+  async deleteProduct(id: number): Promise<boolean> {
+    return await this.productRepository.deleteProduct(id);
+  }
 }

@@ -24,4 +24,25 @@ export class ProductRepository {
       product.activePromoId
     );
   }
+
+  async updateProduct(id: number, data: Partial<ProductEntity>): Promise<ProductEntity | null> {
+    const product = await prisma.product.update({
+      where: { id },
+      data,
+    });
+
+    return new ProductEntity(
+      product.id,
+      product.name,
+      product.price,
+      product.fournisseur,
+      product.categoryId,
+      product.activePromoId
+    );
+  }
+
+  async deleteProduct(id: number): Promise<boolean> {
+    await prisma.product.delete({ where: { id } });
+    return true;
+  }
 }
