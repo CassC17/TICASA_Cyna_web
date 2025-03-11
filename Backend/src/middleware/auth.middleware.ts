@@ -6,15 +6,28 @@ dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
 
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.header("Authorization")?.split(" ")[1];
-  if (!token) return res.status(403).json({ message: "Accès refusé" });
+export const authenticate = (req: Request, res: Response, next: NextFunction): void => {
+  const authHeader = req.header("Authorization");
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    res.status(401).json({ error: "Access denied. No token provided." });
+    return; // Ensure that the function stops execution
+  }
+
+  const token = authHeader.split(" ")[1];
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    (req as any).user = decoded;
-    next();
+    // Verify the token
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: number; email: string };
+
+    // Attach user ID to the request object with proper typing
+    (req as unknown as { user: { id: number; email: string } }).user = {
+      id: decoded.id,
+      email: decoded.email,
+    };
+
+    next(); // Call next() only if authentication succeeds
   } catch (error) {
-    res.status(401).json({ message: "Token invalide" });
+    res.status(401).json({ error: "Invalid or expired token" });
   }
 };

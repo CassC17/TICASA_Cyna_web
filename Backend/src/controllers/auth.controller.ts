@@ -65,3 +65,15 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     res.status(400).json({ error: "An error occurred during registration" });
   }
 };
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const userId = (req as unknown as { user: { id: number } }).user.id; 
+
+    await authService.logout(userId);
+
+    res.status(200).json({ message: "User logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred during logout" });
+  }
+};

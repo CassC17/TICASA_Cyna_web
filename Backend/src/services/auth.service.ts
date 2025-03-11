@@ -36,4 +36,8 @@ export class AuthService {
 
     return UserPresenter.toDTO(user);
   }
+  
+  async logout(userId: number): Promise<void> {
+    await this.userRepository.updateUserStatus(userId, false);
+  }  
 }
