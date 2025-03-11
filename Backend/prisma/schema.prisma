@@ -21,7 +21,7 @@ model User {
 
 model Basket {
   id             Int      @id @default(autoincrement())
-  userId         Int?
+  userId         Int
   basketItemId   Int?
   user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "basket_ibfk_1")
   basketItem     BasketItem? @relation(fields: [basketItemId], references: [id], onDelete: Cascade, map: "basket_ibfk_2")
@@ -37,9 +37,9 @@ model BasketItem {
 
 model Product {
   id                 Int                 @id @default(autoincrement())
-  name               String?             @db.VarChar(255)
-  price              Float?              @db.Float
-  fournisseur        String?             @db.VarChar(255)
+  name               String             @db.VarChar(255)
+  price              Float              @db.Float
+  fournisseur        String             @db.VarChar(255)
   activePromoId      Int?
   categoryId         Int
   basketItem         BasketItem[]
@@ -50,8 +50,8 @@ model Product {
 
 model ProductCategory {
   id          Int       @id @default(autoincrement())
-  name        String?   @db.VarChar(191)
-  description String?   @db.VarChar(255)
+  name        String   @db.VarChar(191)
+  description String   @db.VarChar(255)
   products    Product[]
 }
 
@@ -65,7 +65,7 @@ model PromotedProduct {
 
 model Promotion {
   id              Int       @id @default(autoincrement())
-  name            String?   @db.VarChar(255)
+  name            String   @db.VarChar(255)
   priceReduction  Int?
   products        Product[]
 }
