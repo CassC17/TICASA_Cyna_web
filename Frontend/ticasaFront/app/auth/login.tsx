@@ -4,6 +4,8 @@ import Checkbox from 'expo-checkbox';
 import useUserLogin from '../../hooks/useUserLogin';
 
 export default function LoginScreen() {
+    const { loginUser, loading, error, success } = useUserLogin();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isChecked, setChecked] = useState(false);
@@ -22,8 +24,8 @@ export default function LoginScreen() {
 
         setErrors(newErrors);
 
-        if (!newErrors.email && !newErrors.password) {
-            useUserLogin(email, password);
+        if (Object.values(newErrors).every((error) => error === '')) {
+            loginUser(email, password)
         }
     };
 
