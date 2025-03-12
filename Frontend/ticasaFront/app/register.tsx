@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import useUserRegister from '../hooks/useUserRegister';
 
 export const RegisterScreen = () => {
     const [firstName, setFirstName] = useState('');
@@ -49,29 +50,7 @@ export const RegisterScreen = () => {
         setErrors(newErrors);
 
         if (!newErrors.firstName && !newErrors.lastName && !newErrors.email && !newErrors.password && !newErrors.confirmPassword) {
-            useEffect(() => {
-                fetch('http://localhost/auth/signup', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        nom: firstName,
-                        prenom: lastName,
-                        email: email,
-                        password: password,
-                    }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.status === 201) {
-                            console.log("Inscription réussie");
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Erreur lors de l'inscription : ", error);
-                    });
-            }, []);
+            useUserRegister(firstName, lastName, email, password);
         }
     };
 

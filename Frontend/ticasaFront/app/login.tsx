@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Checkbox from 'expo-checkbox';
+import useUserLogin from '../hooks/useUserLogin';
 
 export const LoginScreen = () => {
     const [email, setEmail] = useState('');
@@ -22,7 +23,7 @@ export const LoginScreen = () => {
         setErrors(newErrors);
 
         if (!newErrors.email && !newErrors.password) {
-            console.log("Connexion réussie", `Connecté avec ${email}!`);
+            useUserLogin(email, password);
         }
     };
 
