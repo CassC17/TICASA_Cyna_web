@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 export default function useUserRegister(firstName: string, lastName: string, email: string, password: string) {
   useEffect(() => {
-    fetch('http://localhost/auth/signup', {
+    fetch('http://localhost:3000/auth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 
 export default function useUserLogin(email: string, password: string) {
   useEffect(() => {
-    fetch('http://localhost/auth/signin', {
+    fetch('http://localhost:3000/auth/login', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
