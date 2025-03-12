@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import Checkbox from 'expo-checkbox';
-import useUserLogin from '../hooks/useUserLogin';
+import useUserLogin from '../../hooks/useUserLogin';
 
 export default function LoginScreen() {
     const [email, setEmail] = useState('');

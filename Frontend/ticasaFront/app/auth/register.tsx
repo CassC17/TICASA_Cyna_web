@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import useUserRegister from '../hooks/useUserRegister';
+import useUserRegister from '../../hooks/useUserRegister';
 
 export default function RegisterScreen() {
     const [firstName, setFirstName] = useState('');
