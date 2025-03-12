@@ -45,4 +45,16 @@ export class ProductRepository {
     await prisma.product.delete({ where: { id } });
     return true;
   }
+
+  async listProducts(): Promise<ProductEntity[]> {
+    const products = await prisma.product.findMany();
+    return products.map(product => new ProductEntity(
+      product.id,
+      product.name,
+      product.price,
+      product.fournisseur,
+      product.categoryId,
+      product.activePromoId
+    ));
+  }
 }

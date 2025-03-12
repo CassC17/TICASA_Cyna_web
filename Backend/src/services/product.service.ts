@@ -31,4 +31,9 @@ export class ProductService {
   async deleteProduct(id: number): Promise<boolean> {
     return await this.productRepository.deleteProduct(id);
   }
+
+    async listProducts(): Promise<ProductDTO[]> {
+      const products = await this.productRepository.listProducts();
+      return products.map(product => ProductPresenter.toDTO(product));
+    }
 }
