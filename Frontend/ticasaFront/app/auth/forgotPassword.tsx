@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
-export const ForgotPasswordScene = () => {
+export default function ForgotPasswordScreen(){
     const [email, setEmail] = useState('');
     const [errors, setErrors] = useState({ email: ''});
 
@@ -22,18 +22,21 @@ export const ForgotPasswordScene = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Mot de passe oublié</Text>
 
-            <TextInput
-                style={[styles.input, errors.email ? styles.wrongInput : null]}
-                placeholder="Adresse email"
-                placeholderTextColor="#999"
-                value={email}
-                onChangeText={setEmail}
-            />
-            {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
+            <View>
+                <View>
+                    <Text style={styles.label}>Adresse mail</Text>
+                    <TextInput
+                        style={[styles.input, errors.email ? styles.wrongInput : null]}
+                        value={email}
+                        onChangeText={setEmail}
+                    />
+                    {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
+                </View>
 
-            <TouchableOpacity style={styles.button} onPress={handleForgotPassword}>
-                <Text style={styles.buttonText}>Réinisialiser mon mot de passe</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handleForgotPassword}>
+                    <Text style={styles.buttonText}>Réinisialiser mon mot de passe</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -51,6 +54,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         marginBottom: 30,
+    },
+    label: {
+        marginTop: 15,
+        marginBottom: 5,
+        color: '#000',
+        fontSize: 16,
     },
     input: {
         width: '100%',
@@ -78,27 +87,14 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginBottom: 10,
     },
-    checkboxContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    checkbox: {
-        width: 20,
-        height: 20,
-        borderRadius: 4,
-        marginRight: 10,
-    },
-    checkboxText: {
-        fontSize: 16,
-        color: '#333',
-    },
     button: {
         width: '100%',
         height: 50,
+        padding: 20,
         backgroundColor: '#007bff',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 20,
         borderRadius: 10,
         shadowColor: '#007bff',
         shadowOffset: { width: 0, height: 4 },

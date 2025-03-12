@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { Link } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import Checkbox from 'expo-checkbox';
 import useUserLogin from '../../hooks/useUserLogin';
 
 export default function LoginScreen() {
@@ -32,47 +32,40 @@ export default function LoginScreen() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Connexion</Text>
+            
+            <View>
+                <View>
+                    <Text style={styles.label}>Adresse mail</Text>
+                    <TextInput
+                        style={[styles.input, errors.email ? styles.wrongInput : null]}
+                        value={email}
+                        onChangeText={setEmail}
+                    />
+                    {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
+                </View>
 
-            <TextInput
-                style={[styles.input, errors.email ? styles.wrongInput : null]}
-                placeholder="Adresse email"
-                placeholderTextColor="#999"
-                value={email}
-                onChangeText={setEmail}
-            />
-            {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
+                <View>
+                    <Text style={styles.label}>Mot de passe</Text>
+                    <TextInput
+                        style={[styles.input, errors.password ? styles.wrongInput : null]}
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry
+                    />
+                    {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
+                </View>
 
-            <TextInput
-                style={[styles.input, errors.password ? styles.wrongInput : null]}
-                placeholder="Mot de passe"
-                placeholderTextColor="#999"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
+                <Link href="auth/forgotPassword"><Text style={styles.registerLink}>Mot de passe oublié ?</Text></Link>
 
-            <TouchableOpacity onPress={() => console.log("Mot de passe oublié")}>
-                <Text style={styles.signupText}>Mot de passe oublié ?</Text>
-            </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={handleLogin}>
+                    <Text style={styles.buttonText}>Se connecter</Text>
+                </TouchableOpacity>
 
-            <View style={styles.checkboxContainer}>
-                <Checkbox 
-                    value={isChecked} 
-                    onValueChange={setChecked} 
-                    color={isChecked ? "#007bff" : undefined} 
-                    style={styles.checkbox}
-                />
-                <Text style={styles.checkboxText}>Rester connecté</Text>
+                <View style={styles.registerContainer}>
+                    <Text>Vous n'avez pas de compte ?</Text>
+                    <Link href="auth/register"><Text style={styles.registerLink}>Inscrivez-vous.</Text></Link>
+                </View>
             </View>
-
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Se connecter</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => console.log("Page inscription")}>
-                <Text style={styles.signupText}>Pas encore de compte ? Inscrivez-vous.</Text>
-            </TouchableOpacity>
         </View>
     );
 };
@@ -91,10 +84,11 @@ const styles = StyleSheet.create({
         color: '#333',
         marginBottom: 30,
     },
-    paragraph: {
+    label: {
+        marginTop: 15,
+        marginBottom: 5,
+        color: '#000',
         fontSize: 16,
-        color: '#333',
-        marginBottom: 15,
     },
     input: {
         width: '100%',
@@ -122,27 +116,13 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginBottom: 10,
     },
-    checkboxContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    checkbox: {
-        width: 20,
-        height: 20,
-        borderRadius: 4,
-        marginRight: 10,
-    },
-    checkboxText: {
-        fontSize: 16,
-        color: '#333',
-    },
     button: {
         width: '100%',
         height: 50,
         backgroundColor: '#007bff',
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 20,
         borderRadius: 10,
         shadowColor: '#007bff',
         shadowOffset: { width: 0, height: 4 },
@@ -155,10 +135,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
-    signupText: {
+    registerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
         marginTop: 20,
-        color: '#007bff',
-        fontSize: 16,
+    },
+    registerLink: {
         textDecorationLine: 'underline',
+        color: '#007bff',
     },
 });
