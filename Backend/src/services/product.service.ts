@@ -36,4 +36,9 @@ export class ProductService {
       const products = await this.productRepository.listProducts();
       return products.map(product => ProductPresenter.toDTO(product));
     }
+
+    async listPromotedProducts(): Promise<ProductDTO[]> {
+      const products = await this.productRepository.listPromotedProducts();
+      return products.map(product => ProductPresenter.toDTO(product));
+    }
 }

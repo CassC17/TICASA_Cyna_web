@@ -57,4 +57,18 @@ export class ProductRepository {
       product.activePromoId
     ));
   }
+
+async listPromotedProducts(): Promise<ProductEntity[]> {
+    const products = await prisma.product.findMany({
+      where: { activePromoId: { not: null } },
+    });
+    return products.map(product => new ProductEntity(
+      product.id,
+      product.name,
+      product.price,
+      product.fournisseur,
+      product.categoryId,
+      product.activePromoId
+    ));
+  }
 }
