@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import useUserRegister from '../../hooks/useUserRegister';
 
 export default function RegisterScreen() {
+    const { registerUser, loading, error, success } = useUserRegister(); // 🔥 On récupère la fonction ici
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -10,47 +12,28 @@ export default function RegisterScreen() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' });
 
-    const handleRegsiter = () => {
+    const handleRegister = () => {
         let newErrors = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
-        if (!firstName.trim()) {
-            newErrors.firstName = "Le prénom est requis.";
-        }
+        if (!firstName.trim()) newErrors.firstName = "Le prénom est requis.";
+        if (!lastName.trim()) newErrors.lastName = "Le nom est requis.";
+        if (!email.trim()) newErrors.email = "L'email est requis.";
+        else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Format d'email invalide.";
+        
+        if (!password.trim()) newErrors.password = "Le mot de passe est requis.";
+        else if (password.length < 8) newErrors.password = "Le mot de passe doit contenir au moins 8 caractères.";
+        else if (!/[A-Z]/.test(password)) newErrors.password = "Le mot de passe doit contenir au moins une majuscule.";
+        else if (!/[a-z]/.test(password)) newErrors.password = "Le mot de passe doit contenir au moins une minuscule.";
+        else if (!/\d/.test(password)) newErrors.password = "Le mot de passe doit contenir au moins un chiffre.";
+        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) newErrors.password = "Le mot de passe doit contenir au moins un caractère spécial.";
 
-        if (!lastName.trim()) {
-            newErrors.lastName = "Le nom est requis.";
-        }
-
-        if (!email.trim()) {
-            newErrors.email = "L'email est requis.";
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            newErrors.email = "Format d'email invalide.";
-        }
-
-        if (!password.trim()) {
-            newErrors.password = "Le mot de passe est requis.";
-        } else if (password.length < 8) {
-            newErrors.password = "Le mot de passe doit contenir au moins 8 caractères.";
-        } else if (!/[A-Z]/.test(password)) {
-            newErrors.password = "Le mot de passe doit contenir au moins une majuscule.";
-        } else if (!/[a-z]/.test(password)) {
-            newErrors.password = "Le mot de passe doit contenir au moins une minuscule.";
-        } else if (!/\d/.test(password)) {
-            newErrors.password = "Le mot de passe doit contenir au moins un chiffre.";
-        } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-            newErrors.password = "Le mot de passe doit contenir au moins un caractère spécial.";
-        }
-
-        if (!confirmPassword.trim()) {
-            newErrors.confirmPassword = "La confirmation du mot de passe est requise.";
-        } else if (password !== confirmPassword) {
-            newErrors.confirmPassword = "Les mots de passe ne correspondent pas.";
-        }
+        if (!confirmPassword.trim()) newErrors.confirmPassword = "La confirmation du mot de passe est requise.";
+        else if (password !== confirmPassword) newErrors.confirmPassword = "Les mots de passe ne correspondent pas.";
 
         setErrors(newErrors);
 
-        if (!newErrors.firstName && !newErrors.lastName && !newErrors.email && !newErrors.password && !newErrors.confirmPassword) {
-            useUserRegister(firstName, lastName, email, password);
+        if (Object.values(newErrors).every((error) => error === '')) {
+            registerUser(firstName, lastName, email, password); // ✅ Appelle la fonction correctement
         }
     };
 
@@ -113,9 +96,12 @@ export default function RegisterScreen() {
                     {errors.confirmPassword ? <Text style={styles.errorText}>{errors.confirmPassword}</Text> : null}
                 </View>
 
-                <TouchableOpacity style={styles.button} onPress={handleRegsiter}>
-                    <Text style={styles.buttonText}>S'inscrire</Text>
+                <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
+                    <Text style={styles.buttonText}>{loading ? "Chargement..." : "S'inscrire"}</Text>
                 </TouchableOpacity>
+
+                {error && <Text style={styles.errorText}>{error}</Text>}
+                {success && <Text style={{ color: "green" }}>Inscription réussie !</Text>}
 
                 <View style={styles.loginContainer}>
                     <Text>Vous avez déjà un compte ?</Text>
@@ -126,7 +112,8 @@ export default function RegisterScreen() {
             </View>
         </View>
     );
-};
+}
+
 
 const styles = StyleSheet.create({
     container: {

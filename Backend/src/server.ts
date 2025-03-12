@@ -13,6 +13,9 @@ app.use(express.json());
 
 // Initialisation de Swagger
 setupSwagger(app);
+app.use(cors({
+  origin: 'http://localhost:8081'  
+}));
 
 // Routes
 app.use("/auth", authRoutes);
