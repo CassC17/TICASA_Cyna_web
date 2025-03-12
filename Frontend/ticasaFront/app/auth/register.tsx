@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import useUserRegister from '../../hooks/useUserRegister';
 
@@ -65,7 +66,7 @@ export default function RegisterScreen() {
                 </View>
 
                 <View>
-                    <Text style={styles.label}>Adresse email</Text>
+                    <Text style={styles.label}>Adresse mail</Text>
                     <TextInput
                         style={[styles.input, errors.email ? styles.wrongInput : null]}
                         value={email}
@@ -105,9 +106,7 @@ export default function RegisterScreen() {
 
                 <View style={styles.loginContainer}>
                     <Text>Vous avez déjà un compte ?</Text>
-                    <TouchableOpacity onPress={() => console.log("Page de connexion")}>
-                        <Text style={styles.loginLink}>Connectez-vous.</Text>
-                    </TouchableOpacity>
+                    <Link href="auth/login"><Text style={styles.loginLink}>Connectez-vous.</Text></Link>
                 </View>
             </View>
         </View>
