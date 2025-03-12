@@ -89,3 +89,12 @@ export const modifyProduct = async (req: Request, res: Response): Promise<void> 
       res.status(500).json({ error: "An error occurred while retrieving the products" });
     }
   };
+
+  export const listPromotedProducts = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const products = await productService.listPromotedProducts();
+      res.status(200).json(products);
+    } catch (error) {
+      res.status(500).json({ error: "An error occurred while retrieving the promoted products" });
+    }
+  };

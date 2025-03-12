@@ -1,5 +1,5 @@
 import express from "express";
-import { createProduct, modifyProduct, deleteProduct, listProducts } from "../controllers/product.controller";
+import { createProduct, modifyProduct, deleteProduct, listProducts, listPromotedProducts } from "../controllers/product.controller";
 import { authenticate } from "../middleware/auth.middleware";
 
 const router = express.Router();
@@ -117,5 +117,17 @@ router.delete("/delete/:id", deleteProduct);
  *         description: Liste des produits
  */
 router.get("/list", listProducts);
+
+/**
+ * @swagger
+ * /products/list/promoted:
+ *   get:
+ *     summary: Lister les produits en promotion
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: Liste des produits en promotion
+ */
+router.get("/list/promoted", listPromotedProducts);
 
 export default router;
