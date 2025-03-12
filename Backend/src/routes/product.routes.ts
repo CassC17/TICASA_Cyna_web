@@ -1,5 +1,5 @@
 import express from "express";
-import { createProduct, modifyProduct, deleteProduct } from "../controllers/product.controller";
+import { createProduct, modifyProduct, deleteProduct, listProducts } from "../controllers/product.controller";
 import { authenticate } from "../middleware/auth.middleware";
 
 const router = express.Router();
@@ -105,5 +105,17 @@ router.put("/modify/:id", modifyProduct);
  *         description: Produit non trouvé
  */
 router.delete("/delete/:id", deleteProduct);
+
+/**
+ * @swagger
+ * /products/list:
+ *   get:
+ *     summary: Lister les produits
+ *     tags: [Products]
+ *     responses:
+ *       200:
+ *         description: Liste des produits
+ */
+router.get("/list", listProducts);
 
 export default router;
