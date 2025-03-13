@@ -3,6 +3,7 @@ import cors from "cors";
 import { setupSwagger } from "./config/swagger";
 import authRoutes from "./routes/auth.routes";
 import productRoutes from "./routes/product.routes";
+import { errorHandler } from "./middleware/errorHandler.middleware";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,6 +21,7 @@ app.use(cors({
 // Routes
 app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
+app.use(errorHandler);
 
 // Démarrer le serveur
 app.listen(port, () => {

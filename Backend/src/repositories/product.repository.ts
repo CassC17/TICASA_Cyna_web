@@ -30,26 +30,33 @@ export class ProductRepository {
   }
 
   async updateProduct(id: number, data: Partial<ProductEntity>): Promise<ProductEntity | null> {
-    const product = await prisma.product.update({
-      where: { id },
-      data,
-    });
-
-    return new ProductEntity(
-      product.id,
-      product.name,
-      product.price,
-      product.fournisseur,
-      product.description,
-      product.image,
-      product.categoryId,
-      product.activePromoId
-    );
+    try {
+      const product = await prisma.product.update({
+        where: { id },
+        data,
+      });
+      return new ProductEntity(
+        product.id,
+        product.name,
+        product.price,
+        product.fournisseur,
+        product.description,
+        product.image,
+        product.categoryId,
+        product.activePromoId
+      );
+    } catch (error) {
+      return null; // Retourne null si le produit n'existe pas
+    }
   }
 
   async deleteProduct(id: number): Promise<boolean> {
-    await prisma.product.delete({ where: { id } });
-    return true;
+    try {
+      await prisma.product.delete({ where: { id } });
+      return true;
+    } catch (error) {
+      return false; // Retourne false si le produit n'existe pas
+    }
   }
 
   async listProducts(): Promise<ProductEntity[]> {
@@ -66,7 +73,7 @@ export class ProductRepository {
     ));
   }
 
-async listPromotedProducts(): Promise<ProductEntity[]> {
+  async listPromotedProducts(): Promise<ProductEntity[]> {
     const products = await prisma.product.findMany({
       where: { activePromoId: { not: null } },
     });

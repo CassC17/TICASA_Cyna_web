@@ -8,7 +8,7 @@ import { RegisterInput, LoginInput } from "../types/user/user.input";
 
 const authService = new AuthService();
 
-export const login = async (req: Request, res: Response): Promise<void> => {
+export const login = async (req: Request, res: Response, next: Function): Promise<void> => {
   try {
     const loginInput = plainToInstance(LoginInput, req.body, {
       excludeExtraneousValues: true,
@@ -21,18 +21,18 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     const result = await authService.login(loginInput.email, loginInput.password);
-
     const formattedUser = plainToInstance(UserPresenter, result.user, {
       excludeExtraneousValues: true,
     });
 
     res.status(200).json({ token: result.token, user: formattedUser });
+    return;
   } catch (error) {
-    res.status(401).json({ error: "An error occurred during login" });
+    next(error);
   }
 };
 
-export const register = async (req: Request, res: Response): Promise<void> => {
+export const register = async (req: Request, res: Response, next: Function): Promise<void> => {
   try {
     const registerInput = plainToInstance(RegisterInput, req.body, {
       excludeExtraneousValues: true,
@@ -40,7 +40,6 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     const dtoErrors = await validate(registerInput);
     if (dtoErrors.length > 0) {
-      // Reformate les erreurs pour une meilleure lisibilité
       const formattedErrors = dtoErrors.map(error => ({
         field: error.property,
         errors: Object.values(error.constraints || {}),
@@ -61,19 +60,19 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       message: "Utilisateur enregistré",
       user: UserPresenter.toDTO(user),
     });
+    return;
   } catch (error) {
-    res.status(400).json({ error: "An error occurred during registration" });
+    next(error);
   }
 };
 
-export const logout = async (req: Request, res: Response): Promise<void> => {
+export const logout = async (req: Request, res: Response, next: Function): Promise<void> => {
   try {
-    const userId = (req as unknown as { user: { id: number } }).user.id; 
-
+    const userId = (req as unknown as { user: { id: number } }).user.id;
     await authService.logout(userId);
-
     res.status(200).json({ message: "User logged out successfully" });
+    return;
   } catch (error) {
-    res.status(500).json({ error: "An error occurred during logout" });
+    next(error);
   }
 };

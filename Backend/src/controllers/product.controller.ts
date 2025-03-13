@@ -1,13 +1,12 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { ProductService } from "../services/product.service";
 import { plainToInstance } from "class-transformer";
 import { validate } from "class-validator";
-import { CreateProductInput } from "../types/product/product.input";
-import { UpdateProductInput } from "../types/product/product.input";
+import { CreateProductInput, UpdateProductInput } from "../types/product/product.input";
 
 const productService = new ProductService();
 
-export const createProduct = async (req: Request, res: Response): Promise<void> => {
+export const createProduct = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {
     const productInput = plainToInstance(CreateProductInput, req.body, {
       excludeExtraneousValues: true,
@@ -35,68 +34,77 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
     );
 
     res.status(201).json({ message: "Produit ajouté avec succès", product });
+    return;
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while creating the product" });
+    next(error);
   }
 };
 
-export const modifyProduct = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const productId = Number(req.params.id);
-      const updateInput = plainToInstance(UpdateProductInput, req.body, {
-        excludeExtraneousValues: true,
+export const modifyProduct = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const productId = Number(req.params.id);
+    const updateInput = plainToInstance(UpdateProductInput, req.body, {
+      excludeExtraneousValues: true,
+    });
+
+    const dtoErrors = await validate(updateInput);
+    if (dtoErrors.length > 0) {
+      res.status(400).json({
+        errors: dtoErrors.map(error => ({
+          field: error.property,
+          errors: Object.values(error.constraints || {}),
+        })),
       });
-  
-      const dtoErrors = await validate(updateInput);
-      if (dtoErrors.length > 0) {
-        res.status(400).json({
-          errors: dtoErrors.map(error => ({
-            field: error.property,
-            errors: Object.values(error.constraints || {}),
-          })),
-        });
-        return;
-      }
-  
-      const updatedProduct = await productService.updateProduct(productId, updateInput);
-  
-      if (!updatedProduct) {
-        res.status(404).json({ error: "Product not found" });
-        return;
-      }
-  
-      res.status(200).json({ message: "Produit mis à jour avec succès", product: updatedProduct });
-    } catch (error) {
-      res.status(500).json({ error: "An error occurred while updating the product" });
+      return;
     }
-  };
-  
-  export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const productId = Number(req.params.id);
-  
-      await productService.deleteProduct(productId);
-  
-      res.status(204).send();
-    } catch (error) {
-      res.status(500).json({ error: "An error occurred while deleting the product" });
-    }
-  };
 
-  export const listProducts = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const products = await productService.listProducts();
-      res.status(200).json(products);
-    } catch (error) {
-      res.status(500).json({ error: "An error occurred while retrieving the products" });
-    }
-  };
+    const updatedProduct = await productService.updateProduct(productId, updateInput);
 
-  export const listPromotedProducts = async (req: Request, res: Response): Promise<void> => {
-    try {
-      const products = await productService.listPromotedProducts();
-      res.status(200).json(products);
-    } catch (error) {
-      res.status(500).json({ error: "An error occurred while retrieving the promoted products" });
+    if (!updatedProduct) {
+      const error = new Error("Produit non trouvé");
+      (error as any).status = 404;
+      throw error;
     }
-  };
+
+    res.status(200).json({ message: "Produit mis à jour avec succès", product: updatedProduct });
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteProduct = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const productId = Number(req.params.id);
+    const deleted = await productService.deleteProduct(productId);
+    if (!deleted) {
+      const error = new Error("Produit non trouvé");
+      (error as any).status = 404;
+      throw error;
+    }
+    res.status(204).send();
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const listProducts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const products = await productService.listProducts();
+    res.status(200).json(products);
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const listPromotedProducts = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const products = await productService.listPromotedProducts();
+    res.status(200).json(products);
+    return;
+  } catch (error) {
+    next(error);
+  }
+};
