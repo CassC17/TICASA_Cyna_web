@@ -17,7 +17,7 @@ export default function Header() {
 
       <TextInput style={styles.searchInput} placeholder="Rechercher..." />
 
-      <Link href="/"><Image source={require('../assets/basketshop.png')} style={styles.shopimage} /></Link>
+      <Image source={require('../assets/basketshop.png')} style={styles.shopimage} />
 
       <Image source={require('../assets/user.png')} style={styles.userimage} />
     </View>
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   },
   tab: {
     color: '#fff',
+    fontWeight: 'bold',
   },
   logo: {
     width: 125,
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     resizeMode: 'contain',
+    cursor: 'pointer',
   },
   searchInput: {
     height: 40,
