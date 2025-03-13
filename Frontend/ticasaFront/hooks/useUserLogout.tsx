@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-export default function useIsLogout() {
+export default function useUserLogout() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
-  const logoutUser = async (token: string) => {
+  const logoutUser = async () => {
     setLoading(true);
     setError(null);
     setSuccess(false);

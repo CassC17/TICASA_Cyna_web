@@ -1,14 +1,22 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from "react-native";
 import { useRouter, Link } from "expo-router";
+import useUserLogout from "../hooks/useUserLogout";
 
 export default function Header() {
   const router = useRouter();
-
+  const { logoutUser, loading } = useUserLogout();
   const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
 
   const hoverProfileMenu = () => {
     setIsProfileMenuVisible(!isProfileMenuVisible);
+  };
+
+  const handleLogout = async () => {
+    await logoutUser();
+    sessionStorage.removeItem('token');
+    router
+      .push('/')
   };
 
   return (
@@ -32,12 +40,14 @@ export default function Header() {
         <View style={styles.profileMenu}>
           <Link href="auth/register"><Text style={styles.profileMenuItem}>Inscription</Text></Link>
           <Link href="auth/login"><Text style={styles.profileMenuItem}>Connexion</Text></Link>
+          <TouchableOpacity onPress={handleLogout} disabled={loading}>
+            <Text style={styles.profileMenuItem}>Déconnexion</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
