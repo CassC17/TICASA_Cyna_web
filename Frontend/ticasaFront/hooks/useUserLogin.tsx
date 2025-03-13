@@ -27,6 +27,7 @@ export default function useUserLogin() {
       if (response.status === 200) {
         console.log("Connexion réussie");
         setSuccess(true);
+        sessionStorage.setItem('token', data.token);
       } else {
         console.error("Erreur de connexion :", data.message || "Erreur inconnue");
         setError(data.message || "Erreur inconnue");

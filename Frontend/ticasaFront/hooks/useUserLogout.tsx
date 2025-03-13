@@ -11,12 +11,17 @@ export default function useIsLogout() {
     setSuccess(false);
 
     try {
+      const token = sessionStorage.getItem('token');
+      if (!token) {
+      throw new Error('Token non trouvé dans la session');
+      }
+
       const response = await fetch('http://localhost:3000/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
       });
 
       const data = await response.json();
