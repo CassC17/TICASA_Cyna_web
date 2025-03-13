@@ -42,6 +42,8 @@ model Product {
   fournisseur        String             @db.VarChar(255)
   activePromoId      Int?
   categoryId         Int
+  description        String             @db.VarChar(255) @default("placeholder")
+  image              String             @db.VarChar(255) @default("placeholder")
   basketItem         BasketItem[]
   promotions         Promotion?          @relation(fields: [activePromoId], references: [id], onDelete: Cascade, map: "product_ibfk_1")
   category           ProductCategory     @relation(fields: [categoryId], references: [id], onDelete: Cascade, map: "product_ibfk_2")

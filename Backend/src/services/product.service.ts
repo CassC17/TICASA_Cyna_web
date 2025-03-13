@@ -9,6 +9,8 @@ export class ProductService {
     name: string,
     price: number,
     fournisseur: string,
+    description: string,
+    image: string,
     categoryId: number,
     activePromoId?: number | null
   ): Promise<ProductDTO> {
@@ -16,6 +18,8 @@ export class ProductService {
       name,
       price,
       fournisseur,
+      description,
+      image,
       categoryId,
       activePromoId
     );

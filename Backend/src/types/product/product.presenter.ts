@@ -7,6 +7,8 @@ export class ProductPresenter {
       product.name,
       product.price,
       product.fournisseur,
+      product.description,
+      product.image,
       product.categoryId,
       product.activePromoId
     );

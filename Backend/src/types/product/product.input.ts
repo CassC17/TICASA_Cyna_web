@@ -16,6 +16,14 @@ export class CreateProductInput {
   fournisseur!: string;
 
   @Expose()
+  @IsNotEmpty({ message: "La description est obligatoire" })
+  description!: string;
+
+  @Expose()
+  @IsNotEmpty({ message: "L'image est obligatoire" })
+  image!: string;
+
+  @Expose()
   @IsNumber({}, { message: "L'ID de la catégorie est obligatoire" })
   categoryId!: number;
 
@@ -41,6 +49,16 @@ export class UpdateProductInput {
   @IsOptional()
   @IsNotEmpty({ message: "Le fournisseur ne peut pas être vide" })
   fournisseur?: string;
+
+  @Expose()
+  @IsOptional()
+  @IsNotEmpty({ message: "La description ne peut pas être vide" })
+  description?: string;
+
+  @Expose()
+  @IsOptional()
+  @IsNotEmpty({ message: "L'image ne peut pas être vide" })
+  image?: string;
 
   @Expose()
   @IsOptional()

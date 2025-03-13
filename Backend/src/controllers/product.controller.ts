@@ -28,6 +28,8 @@ export const createProduct = async (req: Request, res: Response): Promise<void> 
       productInput.name,
       productInput.price,
       productInput.fournisseur,
+      productInput.description,
+      productInput.image,
       productInput.categoryId,
       productInput.activePromoId
     );

@@ -8,11 +8,13 @@ export class ProductRepository {
     name: string,
     price: number,
     fournisseur: string,
+    description: string,
+    image: string,
     categoryId: number,
     activePromoId?: number | null
   ): Promise<ProductEntity> {
     const product = await prisma.product.create({
-      data: { name, price, fournisseur, categoryId, activePromoId },
+      data: { name, price, fournisseur, description, image, categoryId, activePromoId },
     });
 
     return new ProductEntity(
@@ -20,6 +22,8 @@ export class ProductRepository {
       product.name,
       product.price,
       product.fournisseur,
+      product.description,
+      product.image,
       product.categoryId,
       product.activePromoId
     );
@@ -36,6 +40,8 @@ export class ProductRepository {
       product.name,
       product.price,
       product.fournisseur,
+      product.description,
+      product.image,
       product.categoryId,
       product.activePromoId
     );
@@ -53,6 +59,8 @@ export class ProductRepository {
       product.name,
       product.price,
       product.fournisseur,
+      product.description,
+      product.image,
       product.categoryId,
       product.activePromoId
     ));
@@ -67,6 +75,8 @@ async listPromotedProducts(): Promise<ProductEntity[]> {
       product.name,
       product.price,
       product.fournisseur,
+      product.description,
+      product.image,
       product.categoryId,
       product.activePromoId
     ));
