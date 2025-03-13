@@ -3,18 +3,19 @@ import { useEffect } from "react";
 import ErrorHandler from "./providers/ErrorHandler"
 import errorTracking from "./services/errorTraking";
 import "../global.css";
+import Header from "../components/Header";
 
 export default function RootLayout() {
-  // ✅ Initialize global services when app starts
   useEffect(() => {
-    errorTracking(); // Initialize error tracking
+    errorTracking();
   }, []);
 
   return (
     <ErrorHandler>
+      <Header />
         <Stack
           screenOptions={{
-            headerShown: false, // Custom headers are used instead
+            headerShown: false,
           }}
         >
           <Stack.Screen name="index" options={{ title: "Home" }} />

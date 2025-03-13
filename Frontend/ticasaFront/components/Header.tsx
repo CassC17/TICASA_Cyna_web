@@ -1,28 +1,71 @@
-import { View, Text, Pressable, Platform } from "react-native";
-import { Link, useRouter } from "expo-router";
-import useIsLogout from "../hooks/useIsLogout";
+import React from "react";
+import { View, Text, StyleSheet, Image, TextInput } from "react-native";
+import { useRouter, Link } from "expo-router";
 
 export default function Header() {
   const router = useRouter();
-  const logout = useIsLogout();
 
   return (
-    <View className="w-full flex-row justify-between p-4 bg-blue-500">
-      <Text className="text-white text-xl font-bold">My App</Text>
-      
-      {Platform.OS === "web" ? (
-        <Link href="/profile">
-          <Text className="text-white">Profile</Text>
-        </Link>
-      ) : (
-        <Pressable onPress={() => router.push("/profile")}>
-          <Text className="text-white">Profile</Text>
-        </Pressable>
-      )}
+    <View style={styles.container}>
+      <Link href="/"><Image source={require('../assets/logo-cyna.webp')} style={styles.logo} /></Link>
 
-      <Pressable onPress={logout} style={{ marginLeft: 16 }}>
-        <Text className="text-white">Logout</Text>
-      </Pressable>
+      <Link href="product"><Text style={styles.tab}>Produits</Text></Link>
+
+      <Link href="auth/register"><Text style={styles.tab}>Inscription</Text></Link>
+
+      <Link href="auth/login"><Text style={styles.tab}>Connexion</Text></Link>
+
+      <TextInput style={styles.searchInput} placeholder="Rechercher..." />
+
+      <Link href="/"><Image source={require('../assets/basketshop.png')} style={styles.shopimage} /></Link>
+
+      <Image source={require('../assets/user.png')} style={styles.userimage} />
     </View>
   );
-}
+};
+
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    height: 70,
+    paddingTop: 16,
+    paddingBottom: 16,
+    paddingLeft: 70,
+    paddingRight: 70,
+    backgroundColor: '#3b82f6',
+    alignItems: 'center',
+  },
+  tab: {
+    color: '#fff',
+  },
+  logo: {
+    width: 125,
+    resizeMode: 'contain',
+    top: 2,
+  },
+  userimage: {
+    width: 45,
+    height: 45,
+    resizeMode: 'contain',
+    cursor: 'pointer',
+  },
+  shopimage: {
+    width: 40,
+    height: 40,
+    resizeMode: 'contain',
+  },
+  searchInput: {
+    height: 40,
+    width: 200,
+    borderColor: '#fff',
+    borderWidth: 1,
+    borderRadius: 20,
+    paddingLeft: 10,
+    color: '#fff',
+    marginLeft: 20,
+    backgroundColor: '#0008',
+  },
+});

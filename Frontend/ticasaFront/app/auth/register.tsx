@@ -4,7 +4,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import useUserRegister from '../../hooks/useUserRegister';
 
 export default function RegisterScreen() {
-    const { registerUser, loading, error, success } = useUserRegister(); // 🔥 On récupère la fonction ici
+    const { registerUser, loading, error, success } = useUserRegister();
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -34,7 +34,7 @@ export default function RegisterScreen() {
         setErrors(newErrors);
 
         if (Object.values(newErrors).every((error) => error === '')) {
-            registerUser(firstName, lastName, email, password); // ✅ Appelle la fonction correctement
+            registerUser(firstName, lastName, email, password);
         }
     };
 
