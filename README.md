@@ -1,6 +1,7 @@
 # TICASA Cyna
 
-Dans le cadre de notre projet d'étude, nous sommes amenés à développer un site web e-commerce ainsi qu'une application mobile Android et iOS avec un backoffice pour les administrateurs. Dans le cadre du cours de mise en situation dev côté utilisateur / front, nous avons travaillé sur une petite partie de ce gros projet que nous allons détaillé ci-dessous. Nous avons réalisé un site web et une application mobile en utilisant React Native et Node.js.
+Dans le cadre de notre projet d'étude, nous sommes amenés à développer un site web e-commerce ainsi qu'une application mobile Android et iOS avec un backoffice pour les administrateurs. 
+Dans le cadre du cours de mise en situation dev côté utilisateur / front, nous avons travaillé sur une petite partie de ce gros projet que nous allons détaillé ci-dessous. Nous avons réalisé un site web et une application mobile en utilisant React Native et Node.js.
 
 ## Table des Matières
 1. [Fonctionnalités](#fonctionnalités)
