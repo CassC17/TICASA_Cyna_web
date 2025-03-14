@@ -11,7 +11,7 @@ export default function useUserRegister() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:3000/auth/register', {
+      const response = await fetch('http://10.0.2.2:3000/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

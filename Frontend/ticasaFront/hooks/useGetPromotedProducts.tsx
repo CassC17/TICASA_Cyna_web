@@ -9,7 +9,7 @@ export default function useGetAllPromotedProducts() {
   useEffect(() => {
     const fetchAllPromotedProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3000/products/list/promoted");
+        const response = await fetch("http://10.0.2.2:3000/products/list/promoted");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

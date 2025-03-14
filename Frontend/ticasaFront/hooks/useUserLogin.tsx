@@ -11,7 +11,7 @@ export default function useUserLogin() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:3000/auth/login', {
+      const response = await fetch('http://10.0.2.2:3000/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

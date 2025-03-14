@@ -16,7 +16,7 @@ export default function useUserLogout() {
       throw new Error('Token non trouvé dans la session');
       }
 
-      const response = await fetch('http://localhost:3000/auth/logout', {
+      const response = await fetch('http://10.0.2.2:3000/auth/logout', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

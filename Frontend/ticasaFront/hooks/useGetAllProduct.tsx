@@ -16,7 +16,7 @@ export default function useGetAllProducts() {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3000/products/list");
+        const response = await fetch("http://10.0.2.2:3000/products/list");
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
