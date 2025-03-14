@@ -10,8 +10,8 @@ interface ProductCarouselProps {
 export default function ProductCarousel({ products }: ProductCarouselProps) {
   const screenWidth = Dimensions.get("window").width;
   const itemWidth =
-    Platform.OS === "web" ? screenWidth * 0.4 : screenWidth * 0.7; // Adjust item width for Web & Mobile
-  const spacing = Platform.OS === "web" ? 20 : 12;
+    Platform.OS === "web" ? screenWidth * 0.32 : screenWidth * 0.7; // Adjust item width for Web & Mobile
+  const spacing = Platform.OS === "web" ? 5 : 12; // Reduced spacing for Web
   const flatListRef = useRef<FlatList<Product>>(null);
 
   if (!Array.isArray(products)) {
@@ -36,7 +36,7 @@ export default function ProductCarousel({ products }: ProductCarouselProps) {
         bounces={Platform.OS === "ios"} // bouncing  on iOS
         overScrollMode={Platform.OS === "android" ? "never" : "auto"} // Prevent over-scrolling on Android
         contentContainerStyle={{
-          paddingHorizontal: (screenWidth - itemWidth) / 2,
+          paddingHorizontal: (screenWidth - itemWidth) / 6, // Reduced padding on the left
         }}
         getItemLayout={(data, index) => ({
           length: itemWidth + spacing,
@@ -48,7 +48,6 @@ export default function ProductCarousel({ products }: ProductCarouselProps) {
             style={{
               width: itemWidth,
               marginHorizontal: spacing / 2,
-              padding: 10 % 2,
             }}
           >
             <ProductResume prodPromoted={item} />

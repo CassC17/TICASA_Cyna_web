@@ -14,7 +14,7 @@ export default function useUserLogout() {
     setSuccess(false);
 
     try {
-      const token = await AsyncStorage.getItem("token"); // ✅ Récupérer le token sur mobile
+      const token = await AsyncStorage.getItem("token"); 
       if (!token) {
         throw new Error("Token non trouvé");
       }
