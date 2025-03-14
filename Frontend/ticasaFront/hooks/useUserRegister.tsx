@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getApiUrl } from '../config'; 
 
 export default function useUserRegister() {
   const [loading, setLoading] = useState(false);
@@ -11,7 +12,7 @@ export default function useUserRegister() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:3000/auth/register', {
+      const response = await fetch(`${getApiUrl()}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

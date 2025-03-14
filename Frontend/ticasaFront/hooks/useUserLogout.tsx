@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getApiUrl } from "../config";
+import { router } from "expo-router";
 
 export default function useUserLogout() {
   const [loading, setLoading] = useState(false);
@@ -11,17 +14,17 @@ export default function useUserLogout() {
     setSuccess(false);
 
     try {
-      const token = sessionStorage.getItem('token');
+      const token = await AsyncStorage.getItem("token"); // ✅ Récupérer le token sur mobile
       if (!token) {
-      throw new Error('Token non trouvé dans la session');
+        throw new Error("Token non trouvé");
       }
 
-      const response = await fetch('http://localhost:3000/auth/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
+      const response = await fetch(`${getApiUrl()}/auth/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const data = await response.json();
@@ -29,6 +32,8 @@ export default function useUserLogout() {
       if (response.status === 200) {
         console.log("Déconnexion réussie");
         setSuccess(true);
+        router.push("/");
+        await AsyncStorage.removeItem("token"); 
       } else {
         console.error("Erreur de déconnexion :", data.message || "Erreur inconnue");
         setError(data.message || "Erreur inconnue");
@@ -36,6 +41,8 @@ export default function useUserLogout() {
     } catch (err) {
       console.error("Erreur lors de la déconnexion :", err);
       setError("Erreur de déconnexion au serveur.");
+    } finally {
+      setLoading(false);
     }
   };
 

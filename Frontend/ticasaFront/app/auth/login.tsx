@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import useUserLogin from '../../hooks/useUserLogin';
 
@@ -26,6 +26,7 @@ export default function LoginScreen() {
 
         if (Object.values(newErrors).every((error) => error === '')) {
             loginUser(email, password)
+            router.push('/');
         }
     };
 
