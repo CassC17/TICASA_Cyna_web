@@ -3,7 +3,7 @@ import React from "react";
 
 interface Product {
   id: number;
-  nom: string;
+  name: string;
   image: string;
   price: number;
   description?: string;
@@ -28,14 +28,12 @@ export default function ProductDetails({ products }: ProductsProps) {
       </View>
 
       <View className="w-2/3 bg-gray-300 p-6 rounded-r-lg justify-center">
-        <Text className="text-black text-2xl font-extrabold mb-2">
-          {products.nom}
+        <Text className="text-black text-2xl font-bold mb-2">
+          {products.name}
         </Text>
-        {products.description && (
-          <Text className="text-black text-base leading-5">
-            {products.description.slice(0, 100)}...
-          </Text>
-        )}
+        <Text className="text-black text-base leading-5">
+          {products.description ? products.description.slice(0, 100) + "..." : ""}
+        </Text>
       </View>
     </View>
   );

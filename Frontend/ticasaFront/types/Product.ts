@@ -1,9 +1,9 @@
 export interface Product {
     id: number;
-    nom: string; // ✅ Utilisation de 'nom' au lieu de 'name'
+    nom: string; 
     image: string;
     price: number;
     description?: string;
-    activePromoId?: number | null; // ✅ Ajout de activePromoId
+    activePromoId?: number | null; 
   }
   
