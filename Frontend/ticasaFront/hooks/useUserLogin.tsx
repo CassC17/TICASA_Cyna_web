@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { getApiUrl } from '../config'; // Import de la fonction dynamique
 
 export default function useUserLogin() {
   const [loading, setLoading] = useState(false);
@@ -11,15 +12,12 @@ export default function useUserLogin() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://10.0.2.2:3000/auth/login', {
+      const response = await fetch(`${getApiUrl()}/auth/login`, { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();

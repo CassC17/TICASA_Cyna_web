@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Product } from "../types/Product"; // ✅ Import correct du type Product
+import { Product } from "../types/Product";
+import { getApiUrl } from "../config";
 
 export default function useGetAllPromotedProducts() {
   const [prodPromoted, setProdPromoted] = useState<Product[]>([]);
@@ -9,26 +10,24 @@ export default function useGetAllPromotedProducts() {
   useEffect(() => {
     const fetchAllPromotedProducts = async () => {
       try {
-        const response = await fetch("http://10.0.2.2:3000/products/list/promoted");
+        const response = await fetch(`${getApiUrl()}/products/list/promoted`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const data = await response.json();
 
-        // ✅ Vérification que la réponse est bien un tableau
         if (!Array.isArray(data)) {
           throw new Error("Données reçues invalides : Ce n'est pas un tableau.");
         }
 
-        // ✅ Transformation des données pour renommer 'name' en 'nom'
         const formattedData: Product[] = data.map((item: any) => ({
           id: item.id,
-          nom: item.name ?? "Nom inconnu", // ✅ Conversion de name en nom
+          nom: item.name ?? "Nom inconnu",
           image: item.image ?? "placeholder",
           price: item.price ?? 0,
           description: item.description ?? "Pas de description",
-          activePromoId: item.activePromoId ?? null, // ✅ Ajout du champ pour éviter l'erreur
+          activePromoId: item.activePromoId ?? null,
         }));
 
         setProdPromoted(formattedData);
