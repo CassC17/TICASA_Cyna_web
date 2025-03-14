@@ -1,4 +1,4 @@
-import { ScrollView, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image } from "react-native";
 import React from "react";
 
 interface Product {
@@ -9,43 +9,34 @@ interface Product {
   description?: string;
 }
 
-interface ProductDetailsProps {
-  prodPromoted: Product;
+interface ProductsProps {
+  products: Product;
 }
 
-export default function ProductDetails({ prodPromoted }: ProductDetailsProps) {
+export default function ProductDetails({ products }: ProductsProps) {
   return (
-    <ScrollView style={styles.container}>
-      <Image source={{ uri: prodPromoted.image }} style={styles.image} />
-      <Text style={styles.title}>{prodPromoted.nom}</Text>
-      <Text style={styles.price}>${prodPromoted.price}</Text>
-      {prodPromoted.description && (
-        <Text style={styles.description}>{prodPromoted.description}</Text>
-      )}
-    </ScrollView>
+    <View className="flex-row w-full bg-white rounded-lg overflow-hidden shadow-lg m-2">
+      <View className="w-1/3 p-4 flex items-center">
+        <Image
+          source={{ uri: products.image }}
+          className="w-full h-32 rounded-lg"
+          resizeMode="cover"
+        />
+        <Text className="text-center text-blue-500 font-semibold mt-2">
+          ${products.price.toFixed(2)}
+        </Text>
+      </View>
+
+      <View className="w-2/3 bg-gray-300 p-6 rounded-r-lg justify-center">
+        <Text className="text-black text-2xl font-extrabold mb-2">
+          {products.nom}
+        </Text>
+        {products.description && (
+          <Text className="text-black text-base leading-5">
+            {products.description.slice(0, 100)}...
+          </Text>
+        )}
+      </View>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 16,
-    backgroundColor: "#fff",
-  },
-  image: {
-    width: "100%",
-    height: 200,
-    resizeMode: "cover",
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: "bold",
-  },
-  price: {
-    fontSize: 18,
-  },
-  description: {
-    fontSize: 16,
-    marginTop: 8,
-  },
-});
