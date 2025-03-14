@@ -1,7 +1,7 @@
-import React from "react";
-import { FlatList, Dimensions, View, Text } from "react-native";
+import React, { useRef } from "react";
+import { FlatList, Dimensions, View, Text, Platform } from "react-native";
 import ProductResume from "./ProductResume";
-import { Product } from "../types/Product"; // ✅ Import correct du type Product
+import { Product } from "../types/Product";
 
 interface ProductCarouselProps {
   products: Product[];
@@ -9,32 +9,52 @@ interface ProductCarouselProps {
 
 export default function ProductCarousel({ products }: ProductCarouselProps) {
   const screenWidth = Dimensions.get("window").width;
-  const itemWidth = screenWidth / 3 - 16; // Affichage de 3 articles à la fois
+  const itemWidth =
+    Platform.OS === "web" ? screenWidth * 0.4 : screenWidth * 0.7; // Adjust item width for Web & Mobile
+  const spacing = Platform.OS === "web" ? 20 : 12;
+  const flatListRef = useRef<FlatList<Product>>(null);
 
-  // Vérification que products est bien un tableau
   if (!Array.isArray(products)) {
     return <Text>Erreur : les produits ne sont pas un tableau valide</Text>;
   }
-
-  // Filtrer les produits promus uniquement
-  const promotedProducts = products.filter((product) => product.activePromoId !== null);
+  const promotedProducts = products.filter(
+    (product) => product.activePromoId !== null
+  );
 
   return (
-    <FlatList
-      data={promotedProducts}
-      horizontal
-      keyExtractor={(item) => item.id.toString()}
-      showsHorizontalScrollIndicator={false}
-      snapToInterval={itemWidth + 16} // Activation du snapping
-      decelerationRate="fast"
-      contentContainerStyle={{ paddingHorizontal: 8 }}
-      renderItem={({ item }) => (
-        <View style={{ width: itemWidth, marginHorizontal: 8 }}>
-          <ProductResume prodPromoted={item} />
-          {/* ✅ Vérification et encapsulation correcte de Text */}
-
-        </View>
-      )}
-    />
+    <View>
+      <FlatList
+        ref={flatListRef}
+        data={promotedProducts}
+        horizontal
+        keyExtractor={(item) => item.id.toString()}
+        showsHorizontalScrollIndicator={Platform.OS === "web"} // Show scrollbar only on Web
+        pagingEnabled={Platform.OS !== "web"} // Enable paging on Mobile (iOS/Android), free scroll on Web
+        snapToInterval={itemWidth + spacing} // Ensures smooth snapping while allowing free scrolling
+        snapToAlignment="center"
+        decelerationRate={Platform.OS === "ios" ? "fast" : "normal"}
+        bounces={Platform.OS === "ios"} // bouncing  on iOS
+        overScrollMode={Platform.OS === "android" ? "never" : "auto"} // Prevent over-scrolling on Android
+        contentContainerStyle={{
+          paddingHorizontal: (screenWidth - itemWidth) / 2,
+        }}
+        getItemLayout={(data, index) => ({
+          length: itemWidth + spacing,
+          offset: (itemWidth + spacing) * index,
+          index,
+        })}
+        renderItem={({ item }) => (
+          <View
+            style={{
+              width: itemWidth,
+              marginHorizontal: spacing / 2,
+              padding: 10 % 2,
+            }}
+          >
+            <ProductResume prodPromoted={item} />
+          </View>
+        )}
+      />
+    </View>
   );
 }
