@@ -1,4 +1,4 @@
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, Platform } from "react-native";
 import React from "react";
 import useGetPromotedProducts from "../hooks/useGetPromotedProducts";
 import ProductCarousel from "../components/ProductCarousel";
@@ -23,7 +23,9 @@ export default function Index() {
   return (
     <View className="flex-1 p-4 bg-gray-100">
       <Text className="text-xl font-bold mb-4">Promoted Products</Text>
-      <View className="w-full max-w-screen-md mx-auto flex-1">
+      <View
+        className="w-full max-w-screen-lg mx-auto flex-1 mt-8"
+        style={Platform.OS === "web" ? { height: 600, justifyContent: "center" } : {}}>
         <ProductCarousel products={prodPromoted as Product[]} />
       </View>
     </View>
