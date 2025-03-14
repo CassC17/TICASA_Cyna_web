@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { getApiUrl } from '../config'; // Import de la fonction dynamique
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function useUserLogin() {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export default function useUserLogin() {
       if (response.status === 200) {
         console.log("Connexion réussie");
         setSuccess(true);
-        sessionStorage.setItem('token', data.token);
+        await AsyncStorage.setItem("token", data.token);
       } else {
         console.error("Erreur de connexion :", data.message || "Erreur inconnue");
         setError(data.message || "Erreur inconnue");
