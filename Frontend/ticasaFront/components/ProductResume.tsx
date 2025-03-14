@@ -3,7 +3,7 @@ import React from "react";
 
 interface Product {
   id: number;
-  nom: string;
+  name: string;
   image: string;
   price: number;
   description?: string;
@@ -21,7 +21,7 @@ export default function ProductResume({ prodPromoted }: ProductResumeProps) {
         className="w-full h-full justify-end p-4 bg-black/40"
         imageStyle={{ borderRadius: 10 }}
       >
-        <Text className="text-white text-lg font-bold">{prodPromoted.nom}</Text>
+        <Text className="text-white text-lg font-bold">{prodPromoted.name}</Text>
         {prodPromoted.description && (
           <Text className="text-white text-sm truncate">
             {prodPromoted.description.slice(0, 50)}...

@@ -3,7 +3,7 @@ import { getApiUrl } from "../config";
 
 interface Product {
   id: number;
-  nom: string;
+  name: string;
   image: string;
   price: number;
   description?: string; // Optional field

@@ -23,7 +23,7 @@ export default function useGetAllPromotedProducts() {
 
         const formattedData: Product[] = data.map((item: any) => ({
           id: item.id,
-          nom: item.name ?? "Nom inconnu",
+          name: item.name ?? "Nom inconnu",
           image: item.image ?? "placeholder",
           price: item.price ?? 0,
           description: item.description ?? "Pas de description",
