@@ -8,6 +8,7 @@ interface InputProps{
     secureTextEntry?: boolean,
     multiline?: boolean,
     textAlignVertical?: "center" | "auto" | "top" | "bottom" | undefined,
+    variant?: "default" | "textarea"
 }
 
 export default function Input({ 
@@ -17,13 +18,16 @@ export default function Input({
     secureTextEntry = false, 
     multiline = false,
     textAlignVertical = "center",
+    variant = "default"
 }: InputProps) {
 
+    const inputStyle = variant === "textarea" ? "h-40 py-2" : "h-12";
+
     return (
-        <View className="w-full">
+        <View>
             {label && <Text className="mb-1 text-black text-base">{label}</Text>}  
             <TextInput
-                className="w-full h-12 rounded-lg px-4 text-base bg-white shadow-sm"
+                className={`w-full border border-gray-300 rounded-lg px-4 text-lg bg-white shadow ${inputStyle}`}
                 value={value}
                 onChangeText={onChangeText}
                 secureTextEntry={secureTextEntry}

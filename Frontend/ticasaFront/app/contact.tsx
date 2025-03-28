@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import { Link } from "expo-router";
+import Input from "../components/common/Input";
 
 export default function ContactPage() {
     const [email, setEmail] = useState('');
@@ -17,32 +17,10 @@ export default function ContactPage() {
             <Text className="text-2xl font-bold text-gray-800 mb-8">Contactez-nous</Text>
             
             <View className="w-full max-w-md">
-                <View>
-                    <Text className="mt-4 mb-1 text-black text-lg">Adresse mail</Text>
-                    <TextInput
-                        className="w-full h-12 border border-gray-300 rounded-lg px-4 text-lg bg-white shadow"
-                        value={email}
-                        onChangeText={setEmail} 
-                    />
-                </View>
-                <View>
-                    <Text className="mt-4 mb-1 text-black text-lg">Sujet du message</Text>
-                    <TextInput 
-                        className="w-full h-12 border border-gray-300 rounded-lg px-4 text-lg bg-white shadow"
-                        value={subject} 
-                        onChangeText={setSubject}
-                    />
-                </View>
-                <View>
-                    <Text className="mt-4 mb-1 text-black text-lg">Message</Text>
-                    <TextInput
-                        className="w-full h-40 border border-gray-300 rounded-lg px-4 py-2 text-lg bg-white shadow"
-                        value={message}
-                        onChangeText={setMessage}
-                        multiline={true}
-                        textAlignVertical="top"
-                    />
-                </View>
+
+                <Input label="Adresse mail" value={email} onChangeText={setEmail} />
+                <Input label="Sujet du message" value={subject} onChangeText={setSubject} />
+                <Input label="Message" value={message} onChangeText={setMessage} multiline={true} textAlignVertical="top" variant="textarea" />
 
                 <TouchableOpacity onPress={handleSubmit} className="w-full h-12 bg-blue-500 justify-center items-center mt-5 rounded-lg shadow-lg">
                     <Text className="text-white text-lg font-bold">Envoyer</Text>
