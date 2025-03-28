@@ -25,7 +25,10 @@ export default function Index() {
       <Text className="text-xl font-bold mb-4">Promoted Products</Text>
       <View
         className="w-full max-w-screen-lg mx-auto flex-1 mt-8"
-        style={Platform.OS === "web" ? { height: 600, justifyContent: "center" } : {}}>
+        style={
+          Platform.OS === "web" ? { height: 600, justifyContent: "center" } : {}
+        }
+      >
         <ProductCarousel products={prodPromoted as Product[]} />
       </View>
     </View>
