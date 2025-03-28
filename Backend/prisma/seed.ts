@@ -83,35 +83,9 @@ async function main() {
         data: { activePromoId: promotion1.id },
     });
 
-    // Create some basket items
-    const basketItem1 = await prisma.basketItem.create({
-        data: {
-            productId: product1.id,
-            productPrice: product1.price,
-        },
-    });
 
-    const basketItem2 = await prisma.basketItem.create({
-        data: {
-            productId: product2.id,
-            productPrice: product2.price,
-        },
-    });
 
-    // Create baskets for users
-    await prisma.basket.create({
-        data: {
-            userId: user1.id,
-            basketItemId: basketItem1.id,
-        },
-    });
 
-    await prisma.basket.create({
-        data: {
-            userId: user2.id,
-            basketItemId: basketItem2.id,
-        },
-    });
 
     // Create user info
     await prisma.userInfo.create({
