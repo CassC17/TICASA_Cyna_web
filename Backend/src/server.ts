@@ -5,6 +5,7 @@ import authRoutes from "./routes/auth.routes";
 import productRoutes from "./routes/product.routes";
 import { errorHandler } from "./middleware/errorHandler.middleware";
 import categoryRoutes from "./routes/category.routes";
+import promotionRoutes from "./routes/promotion.routes";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,6 +24,7 @@ app.use(cors({
 app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 app.use('/categories', categoryRoutes);
+app.use('/promotions', promotionRoutes);
 app.use(errorHandler);
 
 // Démarrer le serveur
