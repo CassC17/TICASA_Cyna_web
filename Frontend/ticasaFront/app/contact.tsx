@@ -20,7 +20,7 @@ export default function ContactPage() {
                 <View>
                     <Text className="mt-4 mb-1 text-black text-lg">Adresse mail</Text>
                     <TextInput
-                        className="w-full h-12 border rounded-lg px-4 text-lg bg-white shadow"
+                        className="w-full h-12 border border-gray-300 rounded-lg px-4 text-lg bg-white shadow"
                         value={email}
                         onChangeText={setEmail} 
                     />
@@ -28,7 +28,7 @@ export default function ContactPage() {
                 <View>
                     <Text className="mt-4 mb-1 text-black text-lg">Sujet du message</Text>
                     <TextInput 
-                        className="w-full h-12 border rounded-lg px-4 text-lg bg-white shadow"
+                        className="w-full h-12 border border-gray-300 rounded-lg px-4 text-lg bg-white shadow"
                         value={subject} 
                         onChangeText={setSubject}
                     />
@@ -36,7 +36,7 @@ export default function ContactPage() {
                 <View>
                     <Text className="mt-4 mb-1 text-black text-lg">Message</Text>
                     <TextInput
-                        className="w-full h-40 border rounded-lg px-4 py-2 text-lg bg-white shadow"
+                        className="w-full h-40 border border-gray-300 rounded-lg px-4 py-2 text-lg bg-white shadow"
                         value={message}
                         onChangeText={setMessage}
                         multiline={true}
