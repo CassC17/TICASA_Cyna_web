@@ -8,7 +8,6 @@ const ErrorHandler: React.FC<ErrorHandlerProps> = ({ children }) => {
   return (
     <>
       {children}
-      {/* Error handling logic can go here */}
     </>
   );
 };

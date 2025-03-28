@@ -15,7 +15,7 @@ describe("ProductService", () => {
   });
 
   it("should create a product", async () => {
-    const mockProduct = new ProductDTO(1, "Laptop", 999.99, "Dell", 1, null);
+    const mockProduct = new ProductDTO(1, "Laptop", 999.99, "Dell", "Dell Laptop", "test", 1, null);
 
     productRepository.createProduct.mockResolvedValue(mockProduct);
 
@@ -23,6 +23,8 @@ describe("ProductService", () => {
       "Laptop",
       999.99,
       "Dell",
+      "Dell Laptop",
+      "test",
       1,
       null
     );
@@ -39,7 +41,7 @@ describe("ProductService", () => {
   });
 
   it("should update a product", async () => {
-    const mockUpdatedProduct = new ProductDTO(1, "Laptop HP", 899.99, "HP", 1, null);
+    const mockUpdatedProduct = new ProductDTO(1, "Laptop HP", 899.99, "HP", "Dell Laptop", "test", 1, null);
 
     productRepository.updateProduct.mockResolvedValue(mockUpdatedProduct);
 

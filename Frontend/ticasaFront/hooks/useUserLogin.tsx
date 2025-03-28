@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getApiUrl } from '../config'; // Import de la fonction dynamique
+import { getApiUrl } from '../config'; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function useUserLogin() {
