@@ -24,20 +24,22 @@ async function main() {
     },
   });
 
-  // Create Product Categories
-  const electronics = await prisma.productCategory.create({
-    data: {
-      name: 'Electronics',
-      description: 'Electronic devices and gadgets',
-    },
-  });
+    // Create some product categories
+    const category1 = await prisma.productCategory.create({
+        data: {
+            name: 'Electronics',
+            description: 'Electronic devices and gadgets',
+            image: 'gaming.jpg',
+        },
+    });
 
-  const books = await prisma.productCategory.create({
-    data: {
-      name: 'Books',
-      description: 'Various kinds of books',
-    },
-  });
+    const category2 = await prisma.productCategory.create({
+        data: {
+            name: 'Books',
+            description: 'Various kinds of books',
+            image: 'book.jpg',
+        },
+    });
 
   // Create Products
   const smartphone = await prisma.product.create({
@@ -75,62 +77,15 @@ async function main() {
     },
   });
 
-  await prisma.product.update({
-    where: { id: smartphone.id },
-    data: {
-      activePromoId: promo.id,
-    },
-  });
+    // Assign promotion to a product
+    await prisma.product.update({
+        where: { id: product1.id },
+        data: { activePromoId: promotion1.id },
+    });
 
-  // Create Promoted Product
-  await prisma.promotedProduct.create({
-    data: {
-      productId: smartphone.id,
-      name: 'Smartphone - Special Edition',
-      price: 649.99,
-    },
-  });
 
-  // Create Orders
-  const order1 = await prisma.order.create({
-    data: {
-      userId: user1.id,
-      totalprice: 699.99,
-      orderItems: {
-        create: [
-          {
-            productId: smartphone.id,
-            productPrice: smartphone.price,
-            productQty: 1,
-            price: smartphone.price,
-          },
-        ],
-      },
-    },
-  });
 
-  const order2 = await prisma.order.create({
-    data: {
-      userId: user2.id,
-      totalprice: 1319.98,
-      orderItems: {
-        create: [
-          {
-            productId: laptop.id,
-            productPrice: laptop.price,
-            productQty: 1,
-            price: laptop.price,
-          },
-          {
-            productId: novel.id,
-            productPrice: novel.price,
-            productQty: 1,
-            price: novel.price,
-          },
-        ],
-      },
-    },
-  });
+
 
   // Create User Info
   await prisma.userInfo.create({
