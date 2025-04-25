@@ -62,6 +62,7 @@ model ProductCategory {
   id          Int       @id @default(autoincrement())
   name        String   @db.VarChar(191)
   description String   @db.VarChar(255)
+  image       String   @db.VarChar(255) @default("placeholder")
   products    Product[]
 }
 
