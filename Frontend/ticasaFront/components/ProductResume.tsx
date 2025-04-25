@@ -1,5 +1,6 @@
 import { View, Text, ImageBackground } from "react-native";
 import React from "react";
+import { Product } from "../types/Product";
 
 // Fonction pour mapper les images locales
 const getLocalImage = (imageName: string) => {
@@ -11,14 +12,6 @@ const getLocalImage = (imageName: string) => {
 
   return images[imageName] 
 };
-
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  description?: string;
-}
 
 interface ProductResumeProps {
   prodPromoted: Product;

@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground } from "react-native";
+import { View, Text, ImageBackground, Button } from "react-native";
 import React from "react";
 import { Category } from "../types/Category";
 
@@ -13,23 +13,30 @@ const getLocalImage = (imageName: string) => {
 };
 
 interface CategoryResumeProps {
-    category: Category;
+    category: Category,
+    onPress: () => void
 }
 
 
-export default function CategoryResume({ category }: CategoryResumeProps) {
+export default function CategoryResume({ category, onPress }: CategoryResumeProps) {
     return (
-        <View>
+        <View className="p-4">
             <ImageBackground
                 source={getLocalImage(category.image)} 
-                imageStyle={{ borderRadius: 10 }}
+                imageStyle={{ borderRadius: 12 }}
+                className="rounded-xl overflow-hidden"
             >
-            <Text>{category.name}</Text>
-            {category.description && (
-                <Text>
-                    {category.description}
-                </Text>
-            )}
+                <View className="bg-black/50 p-4 rounded-xl">
+                    <View>
+                        <Text className="text-white text-xl font-semibold mb-1">{category.name}</Text>
+                        {category.description && (
+                            <Text className="text-white text-sm">
+                                {category.description}
+                            </Text>
+                        )}
+                    </View>
+                    <Button title="Voir les produits" onPress={onPress} />
+                </View>
             </ImageBackground>
         </View>
     );

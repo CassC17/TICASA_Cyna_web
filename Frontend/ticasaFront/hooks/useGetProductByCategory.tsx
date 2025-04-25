@@ -1,22 +1,23 @@
 import { useState, useEffect } from "react";
 import { getApiUrl } from "../config";
-import { Category } from "../types/Category";
+import { Product } from "../types/Product";
 
-export default function useGetCategories() {
-    const [categories, setCategories] = useState<Category[]>([])
+
+export default function useGetProductByCategory(categoryId: number) {
+    const [products, setProducts] = useState<any[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchProductsByCategories = async () => {
           try {
-            const response = await fetch(`${getApiUrl()}/categories`);
+            const response = await fetch(`${getApiUrl()}/categories/${categoryId}/products`);
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
     
-            const data: Category[] = await response.json();
-            setCategories(data);
+            const data: Product[] = await response.json();
+            setProducts(data);
           } catch (err) {
             setError(err as Error);
           } finally {
@@ -24,8 +25,8 @@ export default function useGetCategories() {
           }
         };
     
-        fetchCategories();
+        fetchProductsByCategories();
       }, []);
     
-      return { categories, isLoading, error };
+      return { products, isLoading, error };
 }
