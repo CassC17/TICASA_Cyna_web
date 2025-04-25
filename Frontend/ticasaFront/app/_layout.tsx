@@ -28,7 +28,6 @@ export default function RootLayout() {
         />
         <Stack.Screen name="product" options={{ title: "Product Details" }} />
       </Stack>
-      <Footer />
     </ErrorHandler>
   );
 }
