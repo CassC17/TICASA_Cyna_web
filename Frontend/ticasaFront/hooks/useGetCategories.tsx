@@ -10,7 +10,8 @@ export default function useGetCategories() {
     useEffect(() => {
         const fetchCategories = async () => {
           try {
-            const response = await fetch(`${getApiUrl()}/categories/`);
+            const response = await fetch(`${getApiUrl()}/categories`);
+            console.log(getApiUrl());
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
