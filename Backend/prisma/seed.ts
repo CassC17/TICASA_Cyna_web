@@ -25,7 +25,7 @@ async function main() {
   });
 
     // Create some product categories
-    const category1 = await prisma.productCategory.create({
+    const electronics = await prisma.productCategory.create({
         data: {
             name: 'Electronics',
             description: 'Electronic devices and gadgets',
@@ -33,7 +33,7 @@ async function main() {
         },
     });
 
-    const category2 = await prisma.productCategory.create({
+    const books = await prisma.productCategory.create({
         data: {
             name: 'Books',
             description: 'Various kinds of books',
@@ -42,7 +42,7 @@ async function main() {
     });
 
   // Create Products
-  const smartphone = await prisma.product.create({
+  const product1 = await prisma.product.create({
     data: {
       name: 'Smartphone',
       price: 699.99,
@@ -80,7 +80,7 @@ async function main() {
     // Assign promotion to a product
     await prisma.product.update({
         where: { id: product1.id },
-        data: { activePromoId: promotion1.id },
+        data: { activePromoId: promo.id },
     });
 
 
@@ -108,7 +108,7 @@ async function main() {
   await prisma.activeSubscription.create({
     data: {
       userId: user1.id,
-      productId: smartphone.id,
+      productId: product1.id,
       endDate: new Date(new Date().setMonth(new Date().getMonth() + 6)),
     },
   });
