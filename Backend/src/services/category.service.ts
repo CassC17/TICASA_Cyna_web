@@ -20,5 +20,9 @@ export const CategoryService = {
 
   async deleteCategory(id: number) {
     return CategoryRepository.delete(id);
+  },
+
+  async getProductsByCategory(categoryId: number) {
+    return CategoryRepository.findProductsByCategoryId(categoryId);
   }
 };

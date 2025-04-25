@@ -31,6 +31,7 @@ async function main() {
         data: {
             name: 'Electronics',
             description: 'Electronic devices and gadgets',
+            image: 'gaming.jpg',
         },
     });
 
@@ -38,6 +39,7 @@ async function main() {
         data: {
             name: 'Books',
             description: 'Various kinds of books',
+            image: 'book.jpg',
         },
     });
 

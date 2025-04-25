@@ -23,5 +23,11 @@ export const CategoryRepository = {
 
   async delete(id: number) {
     return prisma.productCategory.delete({ where: { id } });
+  },
+
+  async findProductsByCategoryId(categoryId: number) {
+    return prisma.product.findMany({
+      where: { categoryId },
+    });
   }
 };

@@ -6,6 +6,7 @@ export class CategoryPresenter {
       id: dto.id,
       name: dto.name,
       description: dto.description,
+      image: dto.image,
     };
   }
 }

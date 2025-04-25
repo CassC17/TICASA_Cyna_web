@@ -1,6 +1,7 @@
 import { Request, Response, RequestHandler } from 'express';
 import { CategoryService } from '../services/category.service';
 import { CategoryPresenter } from '../types/category/category.presenter';
+import { ProductPresenter } from '../types/product/product.presenter';
 
 export const CategoryController = {
   getAll: (async (req, res) => {
@@ -30,5 +31,11 @@ export const CategoryController = {
     const id = parseInt(req.params.id);
     await CategoryService.deleteCategory(id);
     res.status(204).send();
+  }) as RequestHandler,
+
+  getProductsByCategory: (async (req, res) => {
+    const id = parseInt(req.params.id);
+    const products = await CategoryService.getProductsByCategory(id);
+    res.json(products.map(ProductPresenter.toDTO));
   }) as RequestHandler,
 };
