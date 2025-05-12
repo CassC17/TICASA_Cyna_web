@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Dimensions } from "react-native";
 import { useRouter, Link } from "expo-router";
 import useUserLogout from "../hooks/useUserLogout";
+import HoverableView from "./UI/HoverableView";
 
 export default function Header() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function Header() {
 
   const screenWidth = Dimensions.get("window").width;
   const isMobile = screenWidth < 768;
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const hoverProfileMenu = () => {
     setIsProfileMenuVisible(!isProfileMenuVisible);
@@ -31,20 +33,28 @@ export default function Header() {
         <>
           <TextInput style={styles.searchInput} placeholder="Rechercher..." />
           <Text style={styles.tab}>Catégories</Text>
-          <Text style={styles.tab}>Contact</Text>
-          <Text style={styles.tab}>A propos de Cyna</Text>
+          <Link href="contact">
+            <Text style={styles.tab}>Contact</Text>
+          </Link>
+          <Link href="about">
+            <Text style={styles.tab}>A propos de Cyna</Text>
+          </Link>
         </>
       )}
 
       <Link href="product">
-            <Text style={styles.tab}>Produits</Text>
+        <Text style={styles.tab}>Produits</Text>
       </Link>
 
       <Image source={require("../assets/basketshop.png")} style={styles.shopimage} />
 
-      <TouchableOpacity onPress={hoverProfileMenu}>
-        <Image source={require("../assets/user.png")} style={styles.userimage} />
-      </TouchableOpacity>
+      <HoverableView
+        onMouseEnter={() => setIsProfileMenuVisible(true)}
+        onMouseLeave={() => setIsProfileMenuVisible(false)}
+        className="relative"
+      > 
+        <Image source={require("../assets/user.png")} style={styles.userimage} /> 
+      </HoverableView>
 
       {isProfileMenuVisible && (
         <View style={styles.profileMenu}>
@@ -59,6 +69,37 @@ export default function Header() {
           </TouchableOpacity>
         </View>
       )}
+
+
+      {isMobile && (
+        <TouchableOpacity onPress={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <Text className="text-white text-3xl">☰</Text>
+        </TouchableOpacity>
+      )}
+
+      {isMobile && isMobileMenuOpen && (
+        <View className="absolute top-[70px] right-0 w-3/4 h-full bg-blue-600 z-50 p-5">
+          <Link href="/">
+            <Text className="text-white mb-4 text-lg">Accueil</Text>
+          </Link>
+          <Link href="/product">
+            <Text className="text-white mb-4 text-lg">Produits</Text>
+          </Link>
+          <Text className="text-white mb-4 text-lg">Catégories</Text>
+          <Text className="text-white mb-4 text-lg">Contact</Text>
+          <Text className="text-white mb-4 text-lg">À propos de Cyna</Text>
+          <Link href="/auth/login">
+            <Text className="text-white mb-4 text-lg">Se connecter</Text>
+          </Link>
+          <Link href="/auth/register">
+            <Text className="text-white mb-4 text-lg">S'inscrire</Text>
+          </Link>
+          <TouchableOpacity onPress={handleLogout} disabled={loading}>
+            <Text className="text-white text-lg">Déconnexion</Text>
+          </TouchableOpacity>
+        </View>
+      )}
+
     </View>
   );
 }

@@ -1,18 +1,71 @@
-import { View, Text } from "react-native";
+import { View, Text, Image, Linking, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import React from "react";
 
 export default function Footer() {
   return (
-    <View className="w-full bg-gray-900 p-4 flex-row items-center justify-between space-x-8">
-      <View className="flex-row space-x-4">
-        <FontAwesome name="facebook" size={24} color="white" />
-        <FontAwesome name="twitter" size={24} color="white" />
-        <FontAwesome name="instagram" size={24} color="white" />
-        <FontAwesome name="linkedin" size={24} color="white" />
+    <View className="w-full bg-gray-900 px-6 pt-10 pb-4">
+      <View className="flex flex-col md:flex-row md:justify-between md:items-start space-y-10 md:space-y-0 gap-6">
+        
+        <View className="flex-1 items-center">
+          <Image
+            source={require("../assets/logo-cyna.webp")}
+            style={{ width: 90, height: 36, marginBottom: 16 }}
+            resizeMode="contain"
+          />
+          <Text className="text-gray-300 text-sm text-center">
+            Cyna est une plateforme moderne pour découvrir, acheter et gérer vos produits tech en toute simplicité.
+          </Text>
+        </View>
+
+        <View className="flex-1 items-center">
+          <Text className="text-white font-bold mb-3">Liens utiles</Text>
+          <View className="flex-row gap-20">
+            <View className="space-y-2">
+              <Link href="/legal/mentions-legales">
+                <Text className="text-gray-300 text-sm">Mentions légales</Text>
+              </Link>
+              <Link href="/legal/politique-confidentialite">
+                <Text className="text-gray-300 text-sm">Confidentialité</Text>
+              </Link>
+              <Link href="/legal/cgu">
+                <Text className="text-gray-300 text-sm">CGU</Text>
+              </Link>
+            </View>
+            <View className="space-y-2">
+              <Link href="/contact">
+                <Text className="text-gray-300 text-sm">Contact</Text>
+              </Link>
+              <Link href="/about">
+                <Text className="text-gray-300 text-sm">À propos</Text>
+              </Link>
+            </View>
+          </View>
+        </View>
+
+        <View className="flex-1 items-start">
+          <Text className="text-white font-bold mb-3">Suivez-nous</Text>
+          <View className="flex-row space-x-5 mb-4">
+            <TouchableOpacity onPress={() => Linking.openURL("https://facebook.com")}>
+              <FontAwesome name="facebook" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL("https://twitter.com")}>
+              <FontAwesome name="twitter" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL("https://instagram.com")}>
+              <FontAwesome name="instagram" size={24} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL("https://linkedin.com")}>
+              <FontAwesome name="linkedin" size={24} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
 
-      <Text className="text-white text-sm">© 2025 TICASA</Text>
+      <Text className="text-gray-500 text-xs text-center pt-4">
+        © {new Date().getFullYear()} Cyna. Tous droits réservés.
+      </Text>
     </View>
   );
 }
