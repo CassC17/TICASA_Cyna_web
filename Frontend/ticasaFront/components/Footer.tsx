@@ -21,7 +21,7 @@ export default function Footer() {
 
 
         <View className="flex-1 items-center">
-          <View className="flex-row justify-center items-start gap-10">
+          <View className="flex-row justify-center items-start gap-14">
 
             <View className="items-center">
               <Text className="text-white font-bold mb-3">Informations</Text>
