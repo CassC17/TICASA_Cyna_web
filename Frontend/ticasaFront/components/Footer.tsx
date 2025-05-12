@@ -19,30 +19,39 @@ export default function Footer() {
           </Text>
         </View>
 
+
         <View className="flex-1 items-center">
-          <Text className="text-white font-bold mb-3">Liens utiles</Text>
-          <View className="flex-row gap-20">
-            <View className="space-y-2">
-              <Link href="/legal/mentions-legales">
-                <Text className="text-gray-300 text-sm">Mentions légales</Text>
-              </Link>
-              <Link href="/legal/politique-confidentialite">
-                <Text className="text-gray-300 text-sm">Confidentialité</Text>
-              </Link>
-              <Link href="/legal/cgu">
-                <Text className="text-gray-300 text-sm">CGU</Text>
-              </Link>
+          <View className="flex-row justify-center items-start gap-10">
+
+            <View className="items-center">
+              <Text className="text-white font-bold mb-3">Informations</Text>
+              <View className="space-y-2 items-center">
+                <Link href="/legal/mentions-legales">
+                  <Text className="text-gray-300 text-sm text-center">Mentions légales</Text>
+                </Link>
+                <Link href="/legal/politique-confidentialite">
+                  <Text className="text-gray-300 text-sm text-center">Confidentialité</Text>
+                </Link>
+                <Link href="/legal/cgu">
+                  <Text className="text-gray-300 text-sm text-center">CGU</Text>
+                </Link>
+              </View>
             </View>
-            <View className="space-y-2">
-              <Link href="/contact">
-                <Text className="text-gray-300 text-sm">Contact</Text>
-              </Link>
-              <Link href="/about">
-                <Text className="text-gray-300 text-sm">À propos</Text>
-              </Link>
+
+            <View className="items-center">
+              <Text className="text-white font-bold mb-3">Liens utiles</Text>
+              <View className="space-y-2 items-center">
+                <Link href="/contact">
+                  <Text className="text-gray-300 text-sm text-center">Contact</Text>
+                </Link>
+                <Link href="/about">
+                  <Text className="text-gray-300 text-sm text-center">À propos</Text>
+                </Link>
+              </View>
             </View>
           </View>
         </View>
+        
 
         <View className="flex-1 items-start">
           <Text className="text-white font-bold mb-3">Suivez-nous</Text>
@@ -56,14 +65,14 @@ export default function Footer() {
             <TouchableOpacity onPress={() => Linking.openURL("https://instagram.com")}>
               <FontAwesome name="instagram" size={24} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => Linking.openURL("https://linkedin.com")}>
+            <TouchableOpacity onPress={() => Linking.openURL("https://www.linkedin.com/company/cyna-it/")}>
               <FontAwesome name="linkedin" size={24} color="white" />
             </TouchableOpacity>
           </View>
         </View>
       </View>
 
-      <Text className="text-gray-500 text-xs text-center pt-4">
+      <Text className="text-gray-500 text-xs text-center pt-8">
         © {new Date().getFullYear()} Cyna. Tous droits réservés.
       </Text>
     </View>
