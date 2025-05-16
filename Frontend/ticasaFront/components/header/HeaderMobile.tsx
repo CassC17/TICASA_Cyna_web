@@ -45,7 +45,7 @@ export default function HeaderMobile() {
             </TouchableOpacity>
 
             {isMenuOpen && (
-                <View className="absolute top-[70px] right-0 w-3/4 h-full bg-blue-700 p-5 z-50">
+                <View className="absolute top-0 left-0 mt-16 w-3/4 h-full bg-blue-700 p-5 z-999">
                     {navigationLinks.map((item, index) =>
                         item.path ? (
                         <Link href={item.path} key={index}>
