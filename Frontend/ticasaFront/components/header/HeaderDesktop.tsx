@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import { useRouter, Link } from "expo-router";
 import useUserLogout from "../../hooks/useUserLogout";
 import HoverableView from "../UI/HoverableView";
 import { useCart } from "../../contexts/CartContext";
-
 
 export default function Header() {
   const router = useRouter();
@@ -19,112 +18,65 @@ export default function Header() {
   };
 
   return (
-    <View style={styles.container}>
+    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-blue-500 z-50">
       <Link href="/">
-        <Image source={require("../../assets/logo-cyna.webp")} style={styles.logo} />
+        <Image
+          source={require("../../assets/logo-cyna.webp")}
+          style={{ width: 100, height: 40, resizeMode: "contain" }}
+        />
       </Link>
 
-      <TextInput style={styles.searchInput} placeholder="Rechercher..." />
+      <TextInput
+        placeholder="Rechercher..."
+        placeholderTextColor="#fff"
+        className="flex-1 max-w-[200px] h-10 px-3 rounded-full border border-white bg-black/50 text-white"
+      />
 
-      <Text style={styles.tab}>Catégories</Text>
+      <Text className="text-white font-bold mx-2">Catégories</Text>
 
       <Link href="contact">
-        <Text style={styles.tab}>Contact</Text>
+        <Text className="text-white font-bold mx-2">Contact</Text>
       </Link>
-      
+
       <Link href="about">
-        <Text style={styles.tab}>A propos de Cyna</Text>
+        <Text className="text-white font-bold mx-2">A propos de Cyna</Text>
       </Link>
 
       <Link href="product">
-        <Text style={styles.tab}>Produits</Text>
+        <Text className="text-white font-bold mx-2">Produits</Text>
       </Link>
 
       <TouchableOpacity onPress={toggleCart}>
-        <Image source={require("../../assets/basketshop.png")} style={styles.shopimage} />
+        <Image
+          source={require("../../assets/basketshop.png")}
+          style={{ width: 30, height: 30, resizeMode: "contain", cursor: "pointer" }}
+        />
       </TouchableOpacity>
 
       <HoverableView
         onMouseEnter={() => setIsProfileMenuVisible(true)}
         onMouseLeave={() => setIsProfileMenuVisible(false)}
         className="relative"
-      > 
-        <Image source={require("../../assets/user.png")} style={styles.userimage} /> 
+      >
+        <Image
+          source={require("../../assets/user.png")}
+          style={{ width: 35, height: 35, resizeMode: "contain", cursor: "pointer" }}
+        />
       </HoverableView>
 
       {isProfileMenuVisible && (
-        <View style={styles.profileMenu}>
+        <View className="absolute top-[70px] right-0 w-[180px] bg-purple-700 rounded-lg p-2.5 z-50">
           <Link href="auth/register">
-            <Text style={styles.profileMenuItem}>Inscription</Text>
+            <Text className="text-white mb-2.5">Inscription</Text>
           </Link>
           <Link href="auth/login">
-            <Text style={styles.profileMenuItem}>Connexion</Text>
+            <Text className="text-white mb-2.5">Connexion</Text>
           </Link>
           <TouchableOpacity onPress={handleLogout} disabled={loading}>
-            <Text style={styles.profileMenuItem}>Déconnexion</Text>
+            <Text className="text-white mb-2.5">Déconnexion</Text>
           </TouchableOpacity>
         </View>
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-    height: 70,
-    paddingHorizontal: 20,
-    backgroundColor: "#3b82f6",
-    zIndex: 1000,
-  },
-  tab: {
-    color: "#fff",
-    fontWeight: "bold",
-    marginHorizontal: 10,
-  },
-  logo: {
-    width: 100,
-    height: 40,
-    resizeMode: "contain",
-  },
-  userimage: {
-    width: 35,
-    height: 35,
-    resizeMode: "contain",
-    cursor: "pointer",
-  },
-  shopimage: {
-    width: 30,
-    height: 30,
-    resizeMode: "contain",
-    cursor: "pointer",
-  },
-  searchInput: {
-    flex: 1,
-    maxWidth: 200,
-    height: 40,
-    borderColor: "#fff",
-    borderWidth: 1,
-    borderRadius: 20,
-    paddingLeft: 10,
-    color: "#fff",
-    backgroundColor: "#0008",
-  },
-  profileMenu: {
-    position: "absolute",
-    top: 70,
-    right: 0,
-    width: 180,
-    backgroundColor: "#6228FF",
-    borderRadius: 10,
-    padding: 10,
-    zIndex: 1000,
-  },
-  profileMenuItem: {
-    color: "#fff",
-    marginBottom: 10,
-  },
-});
