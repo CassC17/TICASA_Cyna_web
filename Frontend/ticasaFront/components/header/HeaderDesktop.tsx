@@ -32,7 +32,9 @@ export default function Header() {
         className="flex-1 max-w-[200px] h-10 px-3 rounded-full border border-white bg-black/50 text-white"
       />
 
-      <Text className="text-white font-bold mx-2">Catégories</Text>
+      <Link href="categories">
+        <Text className="text-white font-bold mx-2">Catégories</Text>
+      </Link>
 
       <Link href="contact">
         <Text className="text-white font-bold mx-2">Contact</Text>

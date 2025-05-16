@@ -19,7 +19,7 @@ export default function HeaderMobile() {
     const navigationLinks = [
         { label: "Accueil", path: "/" },
         { label: "Produits", path: "/product" },
-        { label: "Catégories" },
+        { label: "Catégories", path: "/categories" },
         { label: "Contact", path: "/contact" },
         { label: "À propos de Cyna", path: "/about" },
     ];
