@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import ErrorHandler from "./providers/ErrorHandler";
 import errorTracking from "./services/errorTraking";
 import "../global.css";
-import Header from "../components/Header";
+import Header from "../components/header/Header";
 import Footer from "../components/Footer";
 import CartDrawer from "../components/CartDrawer";
 import { CartProvider } from "../contexts/CartContext";

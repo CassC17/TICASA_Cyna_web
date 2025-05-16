@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Dimensions } from "react-native";
 import { useRouter, Link } from "expo-router";
-import useUserLogout from "../hooks/useUserLogout";
-import HoverableView from "./UI/HoverableView";
-import { useCart } from "../contexts/CartContext";
+import useUserLogout from "../../hooks/useUserLogout";
+import HoverableView from "../UI/HoverableView";
+import { useCart } from "../../contexts/CartContext";
 
 
 export default function Header() {
@@ -11,14 +11,6 @@ export default function Header() {
   const { logoutUser, loading } = useUserLogout();
   const { toggleCart } = useCart();
   const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
-
-  const screenWidth = Dimensions.get("window").width;
-  const isMobile = screenWidth < 768;
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-  const hoverProfileMenu = () => {
-    setIsProfileMenuVisible(!isProfileMenuVisible);
-  };
 
   const handleLogout = async () => {
     await logoutUser();
@@ -29,28 +21,27 @@ export default function Header() {
   return (
     <View style={styles.container}>
       <Link href="/">
-        <Image source={require("../assets/logo-cyna.webp")} style={styles.logo} />
+        <Image source={require("../../assets/logo-cyna.webp")} style={styles.logo} />
       </Link>
 
-      {!isMobile && (
-        <>
-          <TextInput style={styles.searchInput} placeholder="Rechercher..." />
-          <Text style={styles.tab}>Catégories</Text>
-          <Link href="contact">
-            <Text style={styles.tab}>Contact</Text>
-          </Link>
-          <Link href="about">
-            <Text style={styles.tab}>A propos de Cyna</Text>
-          </Link>
-        </>
-      )}
+      <TextInput style={styles.searchInput} placeholder="Rechercher..." />
+
+      <Text style={styles.tab}>Catégories</Text>
+
+      <Link href="contact">
+        <Text style={styles.tab}>Contact</Text>
+      </Link>
+      
+      <Link href="about">
+        <Text style={styles.tab}>A propos de Cyna</Text>
+      </Link>
 
       <Link href="product">
         <Text style={styles.tab}>Produits</Text>
       </Link>
 
       <TouchableOpacity onPress={toggleCart}>
-        <Image source={require("../assets/basketshop.png")} style={styles.shopimage} />
+        <Image source={require("../../assets/basketshop.png")} style={styles.shopimage} />
       </TouchableOpacity>
 
       <HoverableView
@@ -58,7 +49,7 @@ export default function Header() {
         onMouseLeave={() => setIsProfileMenuVisible(false)}
         className="relative"
       > 
-        <Image source={require("../assets/user.png")} style={styles.userimage} /> 
+        <Image source={require("../../assets/user.png")} style={styles.userimage} /> 
       </HoverableView>
 
       {isProfileMenuVisible && (
@@ -74,37 +65,6 @@ export default function Header() {
           </TouchableOpacity>
         </View>
       )}
-
-
-      {isMobile && (
-        <TouchableOpacity onPress={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-          <Text className="text-white text-3xl">☰</Text>
-        </TouchableOpacity>
-      )}
-
-      {isMobile && isMobileMenuOpen && (
-        <View className="absolute top-[70px] right-0 w-3/4 h-full bg-blue-600 z-50 p-5">
-          <Link href="/">
-            <Text className="text-white mb-4 text-lg">Accueil</Text>
-          </Link>
-          <Link href="/product">
-            <Text className="text-white mb-4 text-lg">Produits</Text>
-          </Link>
-          <Text className="text-white mb-4 text-lg">Catégories</Text>
-          <Text className="text-white mb-4 text-lg">Contact</Text>
-          <Text className="text-white mb-4 text-lg">À propos de Cyna</Text>
-          <Link href="/auth/login">
-            <Text className="text-white mb-4 text-lg">Se connecter</Text>
-          </Link>
-          <Link href="/auth/register">
-            <Text className="text-white mb-4 text-lg">S'inscrire</Text>
-          </Link>
-          <TouchableOpacity onPress={handleLogout} disabled={loading}>
-            <Text className="text-white text-lg">Déconnexion</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
     </View>
   );
 }
