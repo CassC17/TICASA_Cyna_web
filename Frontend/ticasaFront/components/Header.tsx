@@ -3,10 +3,13 @@ import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Dimensions 
 import { useRouter, Link } from "expo-router";
 import useUserLogout from "../hooks/useUserLogout";
 import HoverableView from "./UI/HoverableView";
+import { useCart } from "../contexts/CartContext";
+
 
 export default function Header() {
   const router = useRouter();
   const { logoutUser, loading } = useUserLogout();
+  const { toggleCart } = useCart();
   const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
 
   const screenWidth = Dimensions.get("window").width;
@@ -46,7 +49,9 @@ export default function Header() {
         <Text style={styles.tab}>Produits</Text>
       </Link>
 
-      <Image source={require("../assets/basketshop.png")} style={styles.shopimage} />
+      <TouchableOpacity onPress={toggleCart}>
+        <Image source={require("../assets/basketshop.png")} style={styles.shopimage} />
+      </TouchableOpacity>
 
       <HoverableView
         onMouseEnter={() => setIsProfileMenuVisible(true)}

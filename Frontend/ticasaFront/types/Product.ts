@@ -6,3 +6,5 @@ export interface Product {
     description?: string;
     activePromoId?: number | null; 
 }
+
+export default Product;
