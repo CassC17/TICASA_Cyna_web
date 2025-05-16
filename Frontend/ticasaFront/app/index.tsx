@@ -1,13 +1,13 @@
-import { View, Text, ActivityIndicator, Platform } from "react-native";
+import { View, ScrollView, Text, ActivityIndicator } from "react-native";
 import React from "react";
 import useGetPromotedProducts from "../hooks/useGetPromotedProducts";
 import ProductCarousel from "../components/ProductCarousel";
 import { Product } from "../types/Product";
+import Footer from "../components/Footer";
 
 export default function Index() {
   const { prodPromoted, isLoading, error } = useGetPromotedProducts();
 
-  // Vérification des données
   if (!Array.isArray(prodPromoted)) {
     return (
       <Text className="text-red-500">
@@ -21,13 +21,16 @@ export default function Index() {
     return <Text className="text-red-500">Error: {error.message}</Text>;
 
   return (
-    <View className="flex-1 p-4 bg-gray-100">
-      <Text className="text-xl font-bold mb-4">Promoted Products</Text>
-      <View
-        className="w-full max-w-screen-lg mx-auto flex-1 mt-8"
-        style={Platform.OS === "web" ? { height: 600, justifyContent: "center" } : {}}>
+    <ScrollView className="flex-1 bg-gray-100">
+      <Text className="text-xl font-bold mb-4 py-8 text-center">
+        Promoted Products
+      </Text>
+
+      <View className="w-full max-w-screen-lg mx-auto my-8 h-auto justify-start web:h-[600px] web:justify-center">
         <ProductCarousel products={prodPromoted as Product[]} />
       </View>
-    </View>
+
+      <Footer />
+    </ScrollView>
   );
 }

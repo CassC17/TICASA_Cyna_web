@@ -25,12 +25,14 @@ export default function RootLayout() {
           <Stack.Screen name="index" options={{ title: "Home" }} />
           <Stack.Screen name="auth/login" options={{ title: "Login" }} />
           <Stack.Screen name="auth/register" options={{ title: "Register" }} />
-          <Stack.Screen name="auth/forgotPassword" options={{ title: "Mot de passe oublié" }} />
+          <Stack.Screen
+            name="auth/forgotPassword"
+            options={{ title: "Mot de passe oublié" }}
+          />
           <Stack.Screen name="product" options={{ title: "Product Details" }} />
         </Stack>
 
         <CartDrawer />
-        <Footer />
       </CartProvider>
     </ErrorHandler>
   );
