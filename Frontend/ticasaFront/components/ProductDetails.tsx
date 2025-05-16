@@ -1,19 +1,16 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Button } from "react-native";
 import React from "react";
+import { useCart } from "../contexts/CartContext";
+import { Product } from "../types/Product";
+import { ProductProps } from "../types/ProductProps";
 
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  price: number;
-  description?: string;
-}
+export default function ProductDetails({ products }: ProductProps) {
+  const { addItem } = useCart();
 
-interface ProductsProps {
-  products: Product;
-}
+  const handleAddToCart = (product: Product) => () => {
+    addItem(product);
+  };
 
-export default function ProductDetails({ products }: ProductsProps) {
   return (
     <View className="flex-row w-full bg-white rounded-lg overflow-hidden shadow-lg m-2">
       <View className="w-1/3 p-4 flex items-center">
@@ -34,6 +31,7 @@ export default function ProductDetails({ products }: ProductsProps) {
         <Text className="text-black text-base leading-5">
           {products.description ? products.description.slice(0, 100) + "..." : ""}
         </Text>
+        <Button title="Ajouter au panier" onPress={handleAddToCart(products)} />
       </View>
     </View>
   );
