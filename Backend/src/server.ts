@@ -6,6 +6,7 @@ import productRoutes from "./routes/product.routes";
 import { errorHandler } from "./middleware/errorHandler.middleware";
 import categoryRoutes from "./routes/category.routes";
 import promotionRoutes from "./routes/promotion.routes";
+import paymentRoutes from './routes/payment.routes';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/promotions', promotionRoutes);
+app.use('/payment', paymentRoutes);
 app.use(errorHandler);
 
 // Démarrer le serveur

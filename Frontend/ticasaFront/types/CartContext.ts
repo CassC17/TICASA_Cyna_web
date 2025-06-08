@@ -1,12 +1,13 @@
-import Product from './Product';
+import { CartItem } from './CartItem';
 
 export type CartContextType = {
-    cartItems: Product[];
-    setCartItems: React.Dispatch<React.SetStateAction<Product[]>>;
-    isCartOpen: boolean;
-    toggleCart: () => void;
-    addItem: (item: Product) => void;
-    removeItem: (id: string) => void;
+  cartItems: CartItem[];
+  setCartItems: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  isCartOpen: boolean;
+  toggleCart: () => void;
+  addItem: (item: CartItem) => void;
+  removeItem: (id: number) => void;
 };
+
 
 export default CartContextType;

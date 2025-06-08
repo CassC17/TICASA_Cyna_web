@@ -57,7 +57,7 @@ export default function Header() {
 
       <HoverableView
         onMouseEnter={() => setIsProfileMenuVisible(true)}
-        onMouseLeave={() => setIsProfileMenuVisible(false)}
+        onMouseLeave={() => setIsProfileMenuVisible(true)}
         className="relative"
       >
         <Image

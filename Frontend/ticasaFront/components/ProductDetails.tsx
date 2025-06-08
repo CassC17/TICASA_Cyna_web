@@ -3,12 +3,19 @@ import React from "react";
 import { useCart } from "../contexts/CartContext";
 import { Product } from "../types/Product";
 import { ProductProps } from "../types/ProductProps";
+import { CartItem } from '../types/CartItem';
 
 export default function ProductDetails({ products }: ProductProps) {
   const { addItem } = useCart();
 
-  const handleAddToCart = (product: Product) => () => {
-    addItem(product);
+  const handleAddToCart = () => {
+    const cartItem: CartItem = {
+      ...products,
+      quantity: 1,
+      isSubscription: true, // ou false selon ton besoin
+      duration: 'month', // ou 'year'
+    };
+    addItem(cartItem);
   };
 
   return (
@@ -31,7 +38,7 @@ export default function ProductDetails({ products }: ProductProps) {
         <Text className="text-black text-base leading-5">
           {products.description ? products.description.slice(0, 100) + "..." : ""}
         </Text>
-        <Button title="Ajouter au panier" onPress={handleAddToCart(products)} />
+        <Button title="Ajouter au panier" onPress={handleAddToCart} />
       </View>
     </View>
   );
