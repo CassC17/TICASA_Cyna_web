@@ -8,7 +8,7 @@ export default function ConfirmationScreen() {
       <Text className="text-center mb-6">
         Un email de confirmation vous a été envoyé. Vous pouvez gérer vos abonnements dans votre compte.
       </Text>
-      <Button title="Retour à l'accueil" onPress={() => router.push('/')} />
+      <Button title="Retour" onPress={() => router.push('/product')} />
     </View>
   );
 }

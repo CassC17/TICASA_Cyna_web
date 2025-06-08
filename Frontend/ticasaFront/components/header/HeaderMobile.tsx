@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
 import { Link, useRouter } from "expo-router";
 import useUserLogout from "../../hooks/useUserLogout";
 import { useCart } from "../../contexts/CartContext";
@@ -26,7 +26,7 @@ export default function HeaderMobile() {
 
     return (
         <View className="relative flex-row items-center justify-between h-[70px] px-5 bg-blue-500">
-            <TouchableOpacity onPress={() => setIsMenuOpen(!isMenuOpen)}>
+            <TouchableOpacity onPress={() => setIsMenuOpen(true)}>
                 <Text className="text-white text-3xl">☰</Text>
             </TouchableOpacity>
 
@@ -45,30 +45,39 @@ export default function HeaderMobile() {
             </TouchableOpacity>
 
             {isMenuOpen && (
-                <View className="absolute top-0 left-0 mt-16 w-3/4 h-full bg-blue-700 p-5 z-999">
-                    {navigationLinks.map((item, index) =>
-                        item.path ? (
-                        <Link href={item.path} key={index}>
-                            <Text className="text-white text-lg mb-4">{item.label}</Text>
+                <View className="absolute top-0 left-0 w-full h-full z-50">
+                    {/* Background overlay */}
+                    <Pressable
+                        onPress={() => setIsMenuOpen(false)}
+                        className="absolute w-full h-full bg-black opacity-50"
+                    />
+
+                    {/* Menu drawer */}
+                    <View className="w-3/4 h-full bg-blue-700 p-5">
+                        {navigationLinks.map((item, index) =>
+                            item.path ? (
+                                <Link href={item.path} key={index}>
+                                    <Text className="text-white text-lg mb-4">{item.label}</Text>
+                                </Link>
+                            ) : (
+                                <Text key={index} className="text-white text-lg mb-4">
+                                    {item.label}
+                                </Text>
+                            )
+                        )}
+
+                        <Link href="/auth/login">
+                            <Text className="text-white text-lg mb-4">Se connecter</Text>
                         </Link>
-                        ) : (
-                        <Text key={index} className="text-white text-lg mb-4">
-                            {item.label}
-                        </Text>
-                        )
-                    )}
 
-                    <Link href="/auth/login">
-                        <Text className="text-white text-lg mb-4">Se connecter</Text>
-                    </Link>
+                        <Link href="/auth/register">
+                            <Text className="text-white text-lg mb-4">S'inscrire</Text>
+                        </Link>
 
-                    <Link href="/auth/register">
-                        <Text className="text-white text-lg mb-4">S'inscrire</Text>
-                    </Link>
-
-                    <TouchableOpacity onPress={handleLogout} disabled={loading}>
-                        <Text className="text-white text-lg mb-4">Déconnexion</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={handleLogout} disabled={loading}>
+                            <Text className="text-white text-lg mb-4">Déconnexion</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             )}
         </View>
