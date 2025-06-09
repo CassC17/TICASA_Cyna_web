@@ -1,6 +1,6 @@
 import express from "express";
 import { createProduct, modifyProduct, deleteProduct, listProducts, listPromotedProducts } from "../controllers/product.controller";
-import { authenticate } from "../middleware/auth.middleware";
+import { authenticate, authorizeAdmin } from "../middleware/auth.middleware";
 
 const router = express.Router();
 
@@ -41,7 +41,7 @@ const router = express.Router();
  *       400:
  *         description: Erreur de validation des données
  */
-router.post("/create", createProduct);
+router.post("/create", authenticate, authorizeAdmin, createProduct);
 
 /**
  * @swagger
@@ -82,7 +82,7 @@ router.post("/create", createProduct);
  *       404:
  *         description: Produit non trouvé
  */
-router.put("/modify/:id", modifyProduct);
+router.put("/modify/:id", authenticate, authorizeAdmin, modifyProduct);
 
 /**
  * @swagger
@@ -104,7 +104,7 @@ router.put("/modify/:id", modifyProduct);
  *       404:
  *         description: Produit non trouvé
  */
-router.delete("/delete/:id", deleteProduct);
+router.delete("/delete/:id", authenticate, authorizeAdmin, deleteProduct);
 
 /**
  * @swagger
