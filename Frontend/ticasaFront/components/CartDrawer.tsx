@@ -25,7 +25,7 @@ const CartDrawer = () => {
             </Text>
           ))}
 
-          <CartSummary /> {/* 👈 ajout du bouton ici */}
+          <CartSummary /> 
         </>
       )}
     </View>

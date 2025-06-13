@@ -1,8 +1,12 @@
 import { Product } from './Product';
 
-export interface CartItem extends Product {
+export type CartItem = {
+  id: number;
+  name: string;
+  price: number;
   quantity: number;
-  isSubscription: boolean;
-  duration?: 'month' | 'year';
-}
+  isSubscription?: boolean;
+  duration?: "month" | "year";
+};
+
 export default CartItem;

@@ -74,6 +74,9 @@ export default function Header() {
           <Link href="auth/login">
             <Text className="text-white mb-2.5">Connexion</Text>
           </Link>
+          <Link href="orders/history">
+            <Text className="text-white mb-2.5">Mes commandes</Text>
+          </Link>
           <TouchableOpacity onPress={handleLogout} disabled={loading}>
             <Text className="text-white mb-2.5">Déconnexion</Text>
           </TouchableOpacity>

@@ -13,7 +13,7 @@ const CartSummary = () => {
   );
 
   const handleCheckout = () => {
-    createStripeSession(cartItems, 'user@example.com'); // Remplace par l’email réel si connecté
+    createStripeSession(cartItems, 'user@example.com');
   };
 
   return (

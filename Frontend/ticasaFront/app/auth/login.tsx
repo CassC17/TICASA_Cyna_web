@@ -29,6 +29,7 @@ export default function LoginScreen() {
         if (Object.values(newErrors).every((error) => error === '')) {
             loginUser(email, password)
             AsyncStorage.setItem("userEmail", email);
+            AsyncStorage.removeItem('guestCheckout');
             router.push('/');
         }
     };

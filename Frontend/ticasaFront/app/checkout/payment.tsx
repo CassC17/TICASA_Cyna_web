@@ -4,34 +4,46 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCart } from '../../contexts/CartContext';
 import { createStripeSession } from '../../utils/stripe';
 import { WebView } from 'react-native-webview';
+import { getApiUrl } from '../../config';
 
 export default function PaymentScreen() {
   const { cartItems } = useCart();
   const [checkoutUrl, setCheckoutUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const launchCheckout = async () => {
-      try {
-        const guest = await AsyncStorage.getItem('guestCheckout');
-        const storedEmail = await AsyncStorage.getItem('userEmail');
-        const email = guest ? 'invite@example.com' : storedEmail || 'utilisateur@connecte.com';
+ useEffect(() => {
+  const launchCheckout = async () => {
+    try {
+      const guest = await AsyncStorage.getItem('guestCheckout');
+      const storedEmail = await AsyncStorage.getItem('userEmail');
+      const email = guest ? 'invite@example.com' : storedEmail || 'utilisateur@connecte.com';
 
-        const url = await createStripeSession(cartItems, email);
-        if (Platform.OS === 'web') {
-          window.location.href = url;
-        } else {
-          setCheckoutUrl(url);
-        }
-      } catch (error) {
-        console.error('Erreur Stripe :', error);
-      } finally {
-        setLoading(false);
+      const token = await AsyncStorage.getItem('token');
+
+      await fetch(`${getApiUrl()}/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ cartItems }),
+      });
+
+      const url = await createStripeSession(cartItems, email);
+      if (Platform.OS === 'web') {
+        window.location.href = url;
+      } else {
+        setCheckoutUrl(url);
       }
-    };
+    } catch (error) {
+      console.error('Erreur Stripe :', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    launchCheckout();
-  }, []);
+  launchCheckout();
+}, []);
 
   if (loading) {
     return (
