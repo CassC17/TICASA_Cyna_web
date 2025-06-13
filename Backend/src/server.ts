@@ -9,7 +9,7 @@ import promotionRoutes from "./routes/promotion.routes";
 import paymentRoutes from './routes/payment.routes';
 import adminRoutes from './routes/admin.routes';
 import orderRoutes from "./routes/order.routes";
-import webhookRoutes from './routes/webhook.routes';
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -32,7 +32,7 @@ app.use('/promotions', promotionRoutes);
 app.use('/payment', paymentRoutes);
 app.use('/admin', adminRoutes);
 app.use("/orders", orderRoutes);
-app.use("/webhook", webhookRoutes);
+
 app.use(errorHandler);
 
 // Démarrer le serveur
