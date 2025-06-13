@@ -50,4 +50,17 @@ export class AuthService {
   async logout(userId: number): Promise<void> {
     await this.userRepository.updateUserStatus(userId, false);
   }  
+
+  async updateUser(
+  userId: number,
+  updates: Partial<{ nom: string; prenom: string; email: string; password: string }>
+): Promise<UserDTO> {
+  if (updates.password) {
+    updates.password = await bcrypt.hash(updates.password, 10);
+  }
+
+  const user = await this.userRepository.updateUser(userId, updates);
+  return UserPresenter.toDTO(user);
+}
+
 }

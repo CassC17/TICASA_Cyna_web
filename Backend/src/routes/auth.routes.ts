@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register, logout, getUserById } from "../controllers/auth.controller";
+import { login, register, logout, getUserById, updateUser, getConnectedUser, updateConnectedUser} from "../controllers/auth.controller";
 import { authenticate } from "../middleware/auth.middleware";
 
 const router = express.Router();
@@ -38,6 +38,12 @@ const router = express.Router();
  *         description: Erreur de validation des données
  */
 router.post("/register", register);
+
+router.get("/me", authenticate, getConnectedUser);
+
+router.put("/me", authenticate, updateConnectedUser);
+
+router.put("/user/:id", updateUser);
 
 /**
  * @swagger
