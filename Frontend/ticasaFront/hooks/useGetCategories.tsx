@@ -14,7 +14,6 @@ export default function useGetCategories() {
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
             }
-    
             const data: Category[] = await response.json();
             setCategories(data);
           } catch (err) {

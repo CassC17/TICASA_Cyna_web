@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { getApiUrl } from "../config";
-import { Category } from "../types/Category";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function useGetMe() {
@@ -12,7 +11,7 @@ export default function useGetMe() {
         const fetchMe = async () => {
             try {
                 const token = await AsyncStorage.getItem('token');
-                const response = await fetch(`${getApiUrl()}/me`, {
+                const response = await fetch(`${getApiUrl()}/auth/me`, {
                     headers: { Authorization: `Bearer ${token}` },
                 })
                 if (!response.ok) {

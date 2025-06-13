@@ -1,35 +1,80 @@
-import { View, ScrollView, Text, ActivityIndicator } from "react-native";
+import { View, ScrollView, Text, ActivityIndicator, Image, Pressable } from "react-native";
 import React from "react";
 import useGetPromotedProducts from "../hooks/useGetPromotedProducts";
 import ProductCarousel from "../components/ProductCarousel";
 import { Product } from "../types/Product";
 import Footer from "../components/Footer";
+import { router } from "expo-router";
+import CategoryGridItem from "../components/CategoryGridItem";
+import useGetCategories from "../hooks/useGetCategories";
 
 export default function Index() {
   const { prodPromoted, isLoading, error } = useGetPromotedProducts();
+  const { categories, isLoading: catLoading, error: catError } = useGetCategories();
 
   if (!Array.isArray(prodPromoted)) {
     return (
-      <Text className="text-red-500">
+      <Text className="text-red-500 p-4 text-center">
         Erreur : les produits ne sont pas valides
       </Text>
     );
   }
 
-  if (isLoading) return <ActivityIndicator size="large" color="blue" />;
+  if (isLoading)
+    return (
+      <View className="flex-1 items-center justify-center">
+        <ActivityIndicator size="large" color="blue" />
+      </View>
+    );
+
   if (error)
-    return <Text className="text-red-500">Error: {error.message}</Text>;
+    return (
+      <Text className="text-red-500 p-4 text-center">
+        Error: {error.message}
+      </Text>
+    );
 
   return (
-    <ScrollView className="flex-1 bg-gray-100">
-      <Text className="text-xl font-bold mb-4 py-8 text-center">
-        Promoted Products
-      </Text>
-
-      <View className="w-full max-w-screen-lg mx-auto my-8 h-auto justify-start web:h-[600px] web:justify-center">
-        <ProductCarousel products={prodPromoted as Product[]} />
+    <ScrollView className="flex-1 bg-white">
+      <View className="w-full h-56 bg-blue-600 justify-center items-center">
+        <Text className="text-white text-3xl font-bold">Bienvenue chez Cyna</Text>
+        <Text className="text-white text-base mt-2">Votre cybersécurité commence ici</Text>
       </View>
 
+      <View className="px-4 mt-8">
+        <Text className="text-xl font-bold mb-4 text-gray-800 text-center">
+          Nos produits en promotion
+        </Text>
+        <View className="h-[320px]">
+          <ProductCarousel products={prodPromoted as Product[]} />
+        </View>
+      </View>
+
+      <Text className="text-xl font-bold mt-8 mb-4 text-gray-800 text-center">
+        Parcourez nos catégories
+      </Text>
+
+      {catLoading ? (
+        <ActivityIndicator size="large" color="blue" />
+      ) : catError ? (
+        <Text className="text-red-500 text-center">{catError.message}</Text>
+      ) : (
+        <View className="flex flex-row flex-wrap justify-between px-4">
+          {categories.map((cat) => (
+            <CategoryGridItem key={cat.id} category={cat} />
+          ))}
+        </View>
+      )}
+
+      <View className="px-4 mt-8">
+        <Pressable
+          className="bg-blue-600 p-4 rounded-xl items-center"
+          onPress={() => router.push("/product")}
+        >
+          <Text className="text-white text-base font-semibold">Voir tous nos services</Text>
+        </Pressable>
+      </View>
+      
       <Footer />
     </ScrollView>
   );
