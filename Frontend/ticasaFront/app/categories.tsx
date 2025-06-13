@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, FlatList, ActivityIndicator } from "react-native";
 import useGetCategories from "../hooks/useGetCategories";
 import CategoryResume from "../components/CategoryResume";
+import { router } from "expo-router";
 
 export default function CategoriesPage() {
   const { categories, isLoading, error } = useGetCategories();
@@ -24,7 +25,7 @@ export default function CategoriesPage() {
             <View className="w-full">
               <CategoryResume
                 category={item}
-                onPress={() => console.log(`Category pressed: ${item.id}`)}
+                onPress={() => router.push(`/categories/${item.id}`)}
               />
             </View>
           )}

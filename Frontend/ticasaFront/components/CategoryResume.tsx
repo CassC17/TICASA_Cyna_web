@@ -5,7 +5,7 @@ import { Category } from "../types/Category";
 
 const getLocalImage = (imageName: string) => {
     const images: Record<string, any> = {
-        "tv.png": require("../assets/products/cynaSOC.png"),
+        "cynaSOC.png": require("../assets/products/cynaSOC.png"),
         "laptop.png": require("../assets/products/cynaSOC.png"),
         "frog.jpg": require("../assets/products/cynaSOC.png"),
     };

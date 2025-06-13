@@ -10,27 +10,6 @@ await prisma.productCategory.deleteMany();
 await prisma.user.deleteMany();
 
 async function main() {
-  // Create Users
-  const user1 = await prisma.user.create({
-    data: {
-      nom: 'Doe',
-      prenom: 'John',
-      email: 'john.doe@example.com',
-      password: 'password123',
-      isAdmin: true,
-    },
-  });
-
-  const user2 = await prisma.user.create({
-    data: {
-      nom: 'Smith',
-      prenom: 'Jane',
-      email: 'jane.smith@example.com',
-      password: 'password123',
-      isAdmin: false,
-    },
-  });
-
     // <-----  Catégories de produits  ----->
     const soc = await prisma.productCategory.create({
         data: {
