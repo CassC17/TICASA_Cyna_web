@@ -32,6 +32,27 @@ export const login = async (req: Request, res: Response, next: Function): Promis
   }
 };
 
+export const getUserById = async (req: Request, res: Response, next: Function): Promise<void> => {
+  try {
+    const userId = parseInt(req.params.id);
+    if (isNaN(userId)) {
+      res.status(400).json({ error: "ID utilisateur invalide" });
+      return;
+    }
+
+    const user = await authService['userRepository'].findById(userId);
+    if (!user) {
+      res.status(404).json({ error: "Utilisateur introuvable" });
+      return;
+    }
+
+    res.status(200).json(UserPresenter.toDTO(user));
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 export const register = async (req: Request, res: Response, next: Function): Promise<void> => {
   try {
     const registerInput = plainToInstance(RegisterInput, req.body, {

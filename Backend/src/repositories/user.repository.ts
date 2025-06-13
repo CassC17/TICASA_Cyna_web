@@ -41,4 +41,20 @@ export class UserRepository {
       data: { isLoggedIn },
     });
   }
+
+  async findById(userId: number): Promise<UserEntity | null> {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) return null;
+
+  return new UserEntity(
+    user.id,
+    user.nom,
+    user.prenom,
+    user.email,
+    user.password,
+    user.isAdmin,
+    user.isLoggedIn
+  );
+}
+
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register, logout } from "../controllers/auth.controller";
+import { login, register, logout, getUserById } from "../controllers/auth.controller";
 import { authenticate } from "../middleware/auth.middleware";
 
 const router = express.Router();
@@ -67,6 +67,9 @@ router.post("/register", register);
  *         description: Email ou mot de passe incorrect
  */
 router.post("/login", login);
+
+
+router.get("/user/:id", getUserById);
 
 /**
  * @swagger
