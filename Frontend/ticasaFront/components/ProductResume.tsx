@@ -5,7 +5,7 @@ import { Product } from "../types/Product";
 // Fonction pour mapper les images locales
 const getLocalImage = (imageName: string) => {
   const images: Record<string, any> = {
-    "tv.png": require("../assets/products/tv.png"),
+    "cynaSOC.png": require("../assets/products/cynaSOC.png"),
     //"laptop.png": require("../assets/products/laptop.png"),
     //"frog.jpg": require("../assets/products/frog.png"),
   };

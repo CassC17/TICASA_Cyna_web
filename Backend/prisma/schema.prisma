@@ -48,7 +48,7 @@ model Product {
   fournisseur        String             @db.VarChar(255)
   activePromoId      Int?
   categoryId         Int
-  description        String             @db.VarChar(255) @default("placeholder")
+  description        String             @db.VarChar(255)
   image              String             @db.VarChar(255) @default("placeholder")
   disponibility      Boolean            @default(true)
   orderItem         OrderItem[]
