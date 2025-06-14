@@ -1,6 +1,12 @@
 import { View, Text, Image, Pressable } from "react-native";
 import { router } from "expo-router";
 
+const categoryImages: Record<string, any> = {
+  "cat_soc.png": require("../assets/products/cynaSOC.png"),
+  "cat_edr.png": require("../assets/products/cynaSOC.png"),
+  "cat_xdr.png": require("../assets/products/cynaSOC.png"),
+};
+
 export default function CategoryGridItem({ category }: { category: any }) {
     return (
         <Pressable
@@ -8,7 +14,7 @@ export default function CategoryGridItem({ category }: { category: any }) {
             className="w-[48%] mb-4 mr-2 bg-white rounded-lg shadow-md overflow-hidden"
         >
             <Image
-                source={{ uri: category.image }}
+                source={categoryImages[category.image]}
                 className="w-full h-32"
                 resizeMode="cover"
             />

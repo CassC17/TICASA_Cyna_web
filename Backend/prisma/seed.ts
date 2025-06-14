@@ -15,7 +15,7 @@ async function main() {
         data: {
             name: "SOC (Security Operations Center)",
             description: "Supervision centralisée des événements de sécurité. Surveillance 24/7, analyse de logs, détection d'incidents.",
-            image: "",
+            image: "cynaSOC.png",
         },
     });
 
@@ -23,7 +23,7 @@ async function main() {
         data: {
             name: "EDR (Endpoint Detection & Response)",
             description: "Protection avancée des terminaux contre les menaces. Analyse comportementale, remédiation automatique.",
-            image: "",
+            image: "cynaSOC.png",
         },
     });
 
@@ -31,7 +31,7 @@ async function main() {
         data: {
             name: "XDR (Extended Detection & Response)",
             description: "Sécurité intégrée multi-canal (endpoint, réseau, cloud). Détection intelligente, réponse automatisée.",
-            image: "",
+            image: "cynaSOC.png",
         },
     });
 
@@ -109,48 +109,10 @@ async function main() {
     },
   });
 
-    // Assign promotion to a product
-    await prisma.product.update({
-        where: { id: cynaSoc.id },
-        data: { activePromoId: promo.id },
-    });
-
-
-
-
-
-  // Create User Info
-  await prisma.userInfo.create({
-    data: {
-      userId: user1.id,
-      paymentMean: 'Credit Card',
-      paymentNum: '1234-5678-9012-3456',
-    },
-  });
-
-  await prisma.userInfo.create({
-    data: {
-      userId: user2.id,
-      paymentMean: 'PayPal',
-      paymentNum: 'jane.smith@paypal.com',
-    },
-  });
-
-  // Create Active Subscriptions
-  await prisma.activeSubscription.create({
-    data: {
-      userId: user1.id,
-      productId: cynaSoc.id,
-      endDate: new Date(new Date().setMonth(new Date().getMonth() + 6)),
-    },
-  });
-
-  await prisma.activeSubscription.create({
-    data: {
-      userId: user2.id,
-      productId: cynaXdr.id,
-      endDate: new Date(new Date().setMonth(new Date().getMonth() + 3)),
-    },
+  // Assign promotion to a product
+  await prisma.product.update({
+      where: { id: cynaSoc.id },
+      data: { activePromoId: promo.id },
   });
 
   console.log('Seeding completed successfully.');
