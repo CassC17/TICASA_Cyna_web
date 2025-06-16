@@ -1,4 +1,11 @@
-import { View, ScrollView, Text, ActivityIndicator, Image, Pressable } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  ActivityIndicator,
+  Image,
+  Pressable,
+} from "react-native";
 import React from "react";
 import useGetPromotedProducts from "../hooks/useGetPromotedProducts";
 import ProductCarousel from "../components/ProductCarousel";
@@ -10,7 +17,11 @@ import useGetCategories from "../hooks/useGetCategories";
 
 export default function Index() {
   const { prodPromoted, isLoading, error } = useGetPromotedProducts();
-  const { categories, isLoading: catLoading, error: catError } = useGetCategories();
+  const {
+    categories,
+    isLoading: catLoading,
+    error: catError,
+  } = useGetCategories();
 
   if (!Array.isArray(prodPromoted)) {
     return (
@@ -35,14 +46,18 @@ export default function Index() {
     );
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <View className="w-full h-56 bg-blue-600 justify-center items-center">
-        <Text className="text-white text-3xl font-bold">Bienvenue chez Cyna</Text>
-        <Text className="text-white text-base mt-2">Votre cybersécurité commence ici</Text>
+    <ScrollView className="flex-1 bg-primary">
+      <View className="w-full h-56 justify-center items-center">
+        <Text className="text-white text-3xl font-bold">
+          Bienvenue chez Cyna
+        </Text>
+        <Text className="text-white text-base mt-2">
+          Votre cybersécurité commence ici
+        </Text>
       </View>
 
-      <View className="px-4 mt-8">
-        <Text className="text-xl font-bold mb-4 text-gray-800 text-center">
+      <View className="px-4 mt-8 bg-primary">
+        <Text className="text-xl font-bold mb-4 text-white text-center mt-10">
           Nos produits en promotion
         </Text>
         <View className="h-[320px]">
@@ -50,7 +65,7 @@ export default function Index() {
         </View>
       </View>
 
-      <Text className="text-xl font-bold mt-8 mb-4 text-gray-800 text-center">
+      <Text className="text-xl font-bold mt-8 mb-8 text-white text-center">
         Parcourez nos catégories
       </Text>
 
@@ -66,15 +81,17 @@ export default function Index() {
         </View>
       )}
 
-      <View className="px-4 mt-8">
+      <View className="px-4 mt-8 mb-10 mx-20 px-64">
         <Pressable
-          className="bg-blue-600 p-4 rounded-xl items-center"
+          className="bg-cta p-4 rounded-xl items-center"
           onPress={() => router.push("/product")}
         >
-          <Text className="text-white text-base font-semibold">Voir tous nos services</Text>
+          <Text className="text-primary text-base font-semibold text-center">
+            Voir tous nos services
+          </Text>
         </Pressable>
       </View>
-      
+
       <Footer />
     </ScrollView>
   );

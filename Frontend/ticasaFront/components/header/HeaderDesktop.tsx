@@ -18,7 +18,7 @@ export default function Header() {
   };
 
   return (
-    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-blue-500 z-50">
+    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-primary z-50">
       <Link href="/">
         <Image
           source={require("../../assets/logo-cyna.webp")}
@@ -29,7 +29,7 @@ export default function Header() {
       <TextInput
         placeholder="Rechercher..."
         placeholderTextColor="#fff"
-        className="flex-1 max-w-[200px] h-10 px-3 rounded-full border border-white bg-black/50 text-white"
+        className="flex-1 max-w-[200px] h-10 px-3 rounded-full border border-white bg-primary-dark text-white"
       />
 
       <Link href="categories">
@@ -51,7 +51,12 @@ export default function Header() {
       <TouchableOpacity onPress={toggleCart}>
         <Image
           source={require("../../assets/basketshop.png")}
-          style={{ width: 30, height: 30, resizeMode: "contain", cursor: "pointer" }}
+          style={{
+            width: 30,
+            height: 30,
+            resizeMode: "contain",
+            cursor: "pointer",
+          }}
         />
       </TouchableOpacity>
 
@@ -62,17 +67,22 @@ export default function Header() {
       >
         <Image
           source={require("../../assets/user.png")}
-          style={{ width: 35, height: 35, resizeMode: "contain", cursor: "pointer" }}
+          style={{
+            width: 35,
+            height: 35,
+            resizeMode: "contain",
+            cursor: "pointer",
+          }}
         />
       </HoverableView>
 
       {isProfileMenuVisible && (
-        <View className="absolute top-[70px] right-0 w-[180px] bg-purple-700 rounded-lg p-2.5 z-50">
+        <View className="absolute top-[70px] right-0 w-[180px] bg-primary-dark rounded-lg p-2.5 z-50">
           <Link href="auth/register">
             <Text className="text-white mb-2.5">Inscription</Text>
           </Link>
           <Link href="auth/login">
-            <Text className="text-white mb-2.5">Connexion</Text>
+            <Text className="text-cta mb-2.5">Connexion</Text>
           </Link>
           <Link href="orders/history">
             <Text className="text-white mb-2.5">Mes commandes</Text>

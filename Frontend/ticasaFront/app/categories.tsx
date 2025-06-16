@@ -8,7 +8,7 @@ export default function CategoriesPage() {
   const { categories, isLoading, error } = useGetCategories();
 
   return (
-    <View className="flex-1 bg-gray-100 p-4">
+    <View className="flex-1 bg-primary p-4">
       {isLoading ? (
         <View className="flex-1 items-center justify-center">
           <ActivityIndicator size="large" color="blue" />
