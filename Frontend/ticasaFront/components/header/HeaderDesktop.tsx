@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import { useRouter, Link } from "expo-router";
 import useUserLogout from "../../hooks/useUserLogout";
-import HoverableView from "../UI/HoverableView";
 import { useCart } from "../../contexts/CartContext";
 
 export default function Header() {
@@ -17,8 +16,12 @@ export default function Header() {
     router.push("/");
   };
 
+  const toggleProfileMenu = () => {
+    setIsProfileMenuVisible((prev) => !prev);
+  };
+
   return (
-    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-blue-500 z-50">
+    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-blue-500 z-50 relative">
       <Link href="/">
         <Image
           source={require("../../assets/logo-cyna.webp")}
@@ -48,23 +51,12 @@ export default function Header() {
         <Text className="text-white font-bold mx-2">Produits</Text>
       </Link>
 
-      <TouchableOpacity onPress={toggleCart}>
-        <Image
-          source={require("../../assets/basketshop.png")}
-          style={{ width: 30, height: 30, resizeMode: "contain", cursor: "pointer" }}
-        />
-      </TouchableOpacity>
-
-      <HoverableView
-        onMouseEnter={() => setIsProfileMenuVisible(true)}
-        onMouseLeave={() => setIsProfileMenuVisible(true)}
-        className="relative"
-      >
+      <TouchableOpacity onPress={toggleProfileMenu}>
         <Image
           source={require("../../assets/user.png")}
           style={{ width: 35, height: 35, resizeMode: "contain", cursor: "pointer" }}
         />
-      </HoverableView>
+      </TouchableOpacity>
 
       {isProfileMenuVisible && (
         <View className="absolute top-[70px] right-0 w-[180px] bg-purple-700 rounded-lg p-2.5 z-50">
@@ -82,6 +74,6 @@ export default function Header() {
           </TouchableOpacity>
         </View>
       )}
-    </View>
+      </View>
   );
 }
