@@ -11,13 +11,14 @@ export default function Header() {
   const { toggleCart } = useCart();
   const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
 
   useEffect(() => {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem("token");
       setIsAuthenticated(!!token);
     };
-
     checkToken();
   }, []);
 
@@ -26,6 +27,12 @@ export default function Header() {
     await AsyncStorage.removeItem("token");
     setIsAuthenticated(false);
     router.push("/");
+  };
+
+  const handleSearch = async () => {
+    if (searchText.trim() !== "") {
+      router.push(`/search?query=${encodeURIComponent(searchText)}`);
+    }
   };
 
   const toggleProfileMenu = () => {
@@ -41,11 +48,20 @@ export default function Header() {
         />
       </Link>
 
-      <TextInput
-        placeholder="Rechercher..."
-        placeholderTextColor="#fff"
-        className="flex-1 max-w-[200px] h-10 px-3 rounded-full border border-white bg-black/50 text-white"
-      />
+      <View className="flex-row items-center bg-black/50 border border-white rounded-full h-10 px-3 max-w-[250px]">
+        <TextInput
+          placeholder="Rechercher..."
+          placeholderTextColor="#fff"
+          value={searchText}
+          onChangeText={setSearchText}
+          onSubmitEditing={handleSearch}
+          className="flex-1 text-white"
+        />
+        <TouchableOpacity onPress={handleSearch}>
+          <Text className="text-white ml-2">🔍</Text>
+        </TouchableOpacity>
+      </View>
+
 
       <Link href="categories">
         <Text className="text-white font-bold mx-2">Catégories</Text>
