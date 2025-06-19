@@ -35,48 +35,51 @@ export default function Contact() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-white">
+    <ScrollView className="flex-1 bg-primary space-y-6">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
         <View className="min-h-screen flex flex-col justify-between px-6 py-8">
-          <Text className="text-2xl font-bold mb-6 text-blue-600">
+          <Text className="text-2xl font-bold mb-6 text-white">
             Contactez-nous
           </Text>
 
-          <Text className="mb-1 font-semibold">Nom</Text>
+          <Text className="font-semibold text-white">Nom</Text>
           <TextInput
-            className="border border-gray-300 rounded-md px-4 py-2 mb-4"
+            className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2 mb-4 text-text"
             value={name}
             onChangeText={setName}
             placeholder="Votre nom"
+            placeholderTextColor="#E0E0E0"
           />
 
-          <Text className="mb-1 font-semibold">Adresse e-mail</Text>
+          <Text className="font-semibold text-white">Adresse e-mail</Text>
           <TextInput
-            className="border border-gray-300 rounded-md px-4 py-2 mb-4"
+            className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2 mb-4 text-text"
             value={email}
             onChangeText={setEmail}
             placeholder="votre@email.com"
+            placeholderTextColor="#E0E0E0"
             keyboardType="email-address"
             autoCapitalize="none"
           />
 
-          <Text className="mb-1 font-semibold">Message</Text>
+          <Text className="font-semibold text-white">Message</Text>
           <TextInput
-            className="border border-gray-300 rounded-md px-4 py-2 mb-6"
+            className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2 mb-6 text-text"
             value={message}
             onChangeText={setMessage}
             placeholder="Écrivez votre message ici..."
+            placeholderTextColor="#E0E0E0"
             multiline
             numberOfLines={4}
           />
 
           <TouchableOpacity
             onPress={handleSubmit}
-            className="bg-blue-600 rounded-full py-3 px-6 self-start"
+            className="bg-cta rounded-full py-3 px-6 self-start"
           >
-            <Text className="text-white font-bold text-center">Envoyer</Text>
+            <Text className="text-primary font-bold text-center">Envoyer</Text>
           </TouchableOpacity>
         </View>
         <Footer />
