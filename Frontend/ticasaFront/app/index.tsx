@@ -81,7 +81,7 @@ export default function Index() {
         </View>
       )}
 
-      <View className="px-4 mt-8 mb-10 mx-20 px-64">
+      <View className="px-64 mt-8 mb-10 mx-20">
         <Pressable
           className="bg-cta p-4 rounded-xl items-center"
           onPress={() => router.push("/product")}

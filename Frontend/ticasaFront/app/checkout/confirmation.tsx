@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { router } from "expo-router";
 
 export default function ConfirmationScreen() {
@@ -11,7 +11,14 @@ export default function ConfirmationScreen() {
         Un email de confirmation vous a été envoyé. Vous pouvez gérer vos
         abonnements dans votre compte.
       </Text>
-      <Button title="Retour" onPress={() => router.push("/product")} />
+      <Pressable
+        className="bg-cta p-4 rounded-xl items-center"
+        onPress={() => router.push("/product")}
+      >
+        <Text className="text-primary text-base font-semibold text-center">
+          Retour
+        </Text>
+      </Pressable>
     </View>
   );
 }
