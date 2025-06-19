@@ -14,7 +14,7 @@ export default function ProductsPage() {
   const { products, isLoading, error } = useGetAllProducts();
 
   return (
-    <ScrollView className="flex-1 bg-gray-100">
+    <ScrollView className="flex-1 bg-primary">
       <View className="min-h-screen flex flex-col justify-between px-6 py-8">
         {isLoading ? (
           <View className="flex-1 items-center justify-center">

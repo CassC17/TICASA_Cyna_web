@@ -39,45 +39,53 @@ export default function Contact() {
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        <View className="min-h-screen flex flex-col justify-between px-6 py-8">
-          <Text className="text-2xl font-bold mb-6 text-white">
+        <View className="min-h-screen flex flex-col justify-between px-6 w-full max-w-md self-center ">
+          <Text className="text-2xl text-center font-bold mt-6 text-white">
             Contactez-nous
           </Text>
 
-          <Text className="font-semibold text-white">Nom</Text>
-          <TextInput
-            className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2 mb-4 text-text"
-            value={name}
-            onChangeText={setName}
-            placeholder="Votre nom"
-            placeholderTextColor="#E0E0E0"
-          />
+          <View className="space-y-1">
+            <Text className="font-semibold text-white mb-2">Nom</Text>
+            <TextInput
+              className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2 text-text"
+              value={name}
+              onChangeText={setName}
+              placeholder="Votre nom"
+              placeholderTextColor="#E0E0E0"
+            />
+          </View>
 
-          <Text className="font-semibold text-white">Adresse e-mail</Text>
-          <TextInput
-            className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2 mb-4 text-text"
-            value={email}
-            onChangeText={setEmail}
-            placeholder="votre@email.com"
-            placeholderTextColor="#E0E0E0"
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
+          <View className="space-y-1">
+            <Text className="font-semibold text-white mb-2">
+              Adresse e-mail
+            </Text>
+            <TextInput
+              className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2  text-text"
+              value={email}
+              onChangeText={setEmail}
+              placeholder="votre@email.com"
+              placeholderTextColor="#E0E0E0"
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </View>
 
-          <Text className="font-semibold text-white">Message</Text>
-          <TextInput
-            className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2 mb-6 text-text"
-            value={message}
-            onChangeText={setMessage}
-            placeholder="Écrivez votre message ici..."
-            placeholderTextColor="#E0E0E0"
-            multiline
-            numberOfLines={4}
-          />
+          <View className="space-y-1">
+            <Text className="font-semibold text-white mb-2">Message</Text>
+            <TextInput
+              className="border border-gray-300 bg-primary-dark rounded-md px-4 py-2 text-text"
+              value={message}
+              onChangeText={setMessage}
+              placeholder="Écrivez votre message ici..."
+              placeholderTextColor="#E0E0E0"
+              multiline
+              numberOfLines={4}
+            />
+          </View>
 
           <TouchableOpacity
             onPress={handleSubmit}
-            className="bg-cta rounded-full py-3 px-6 self-start"
+            className="bg-cta rounded-full py-3 px-6 self-start mb-8"
           >
             <Text className="text-primary font-bold text-center">Envoyer</Text>
           </TouchableOpacity>

@@ -1,9 +1,9 @@
-import { View, Text, Image, Button } from "react-native";
+import { View, Text, Image, Button, Pressable } from "react-native";
 import React from "react";
 import { useCart } from "../contexts/CartContext";
 import { Product } from "../types/Product";
 import { ProductProps } from "../types/ProductProps";
-import { CartItem } from '../types/CartItem';
+import { CartItem } from "../types/CartItem";
 
 export default function ProductDetails({ products }: ProductProps) {
   const { addItem } = useCart();
@@ -13,7 +13,7 @@ export default function ProductDetails({ products }: ProductProps) {
       ...products,
       quantity: 1,
       isSubscription: true, // ou false selon ton besoin
-      duration: 'month', // ou 'year'
+      duration: "month", // ou 'year'
     };
     addItem(cartItem);
   };
@@ -31,14 +31,23 @@ export default function ProductDetails({ products }: ProductProps) {
         </Text>
       </View>
 
-      <View className="w-2/3 bg-gray-300 p-6 rounded-r-lg justify-center">
-        <Text className="text-black text-2xl font-bold mb-2">
+      <View className="w-2/3 bg-blue-accent p-6 rounded-tr-lg rounded-br-lg justify-center">
+        <Text className="text-white text-2xl font-bold mb-2">
           {products.name}
         </Text>
-        <Text className="text-black text-base leading-5">
-          {products.description ? products.description.slice(0, 100) + "..." : ""}
+        <Text className="text-white text-sm mb-4">
+          {products.description
+            ? products.description.slice(0, 100) + "..."
+            : ""}
         </Text>
-        <Button title="Ajouter au panier" onPress={handleAddToCart} />
+        <Pressable
+          onPress={handleAddToCart}
+          className="bg-orange-500 rounded-full px-4 py-3 items-center"
+        >
+          <Text className="text-primary text-base font-semibold text-center">
+            Ajouter au panier
+          </Text>
+        </Pressable>
       </View>
     </View>
   );
