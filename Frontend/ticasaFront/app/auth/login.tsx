@@ -32,7 +32,6 @@ export default function LoginScreen() {
       <Text className="text-3xl font-bold text-white mb-8">Connexion</Text>
 
       <View className="w-full max-w-md">
-        {/* Email */}
         <View className="mb-4">
           <Text className="text-base text-white mb-1">Adresse mail</Text>
           <TextInput
@@ -49,7 +48,6 @@ export default function LoginScreen() {
           )}
         </View>
 
-        {/* Mot de passe */}
         <View className="mb-2">
           <Text className="text-base text-white mb-1">Mot de passe</Text>
           <TextInput
@@ -67,14 +65,12 @@ export default function LoginScreen() {
           )}
         </View>
 
-        {/* Mot de passe oublié */}
         <Link href="auth/forgotPassword">
           <Text className="text-blue-soft underline text-right mb-4">
             Mot de passe oublié ?
           </Text>
         </Link>
 
-        {/* Bouton de connexion */}
         <Pressable
           onPress={handleLogin}
           className="bg-cta py-3 rounded-lg items-center shadow-md mt-2"
@@ -82,7 +78,6 @@ export default function LoginScreen() {
           <Text className="text-primary font-bold text-lg">Se connecter</Text>
         </Pressable>
 
-        {/* Lien d'inscription */}
         <View className="flex-row justify-center mt-6">
           <Text className="text-text mr-1">Vous n'avez pas de compte ?</Text>
           <Link href="auth/register">

@@ -52,11 +52,11 @@ export default function OrderHistory() {
 
   if (notAuthenticated) {
     return (
-      <View className="flex-1 justify-center items-center px-6">
+      <View className="flex-1 justify-center items-center px-6 bg-primary">
         <Text className="text-xl font-semibold text-red-600 mb-2">
           Vous n'êtes pas connecté
         </Text>
-        <Text className="text-gray-600 text-center">
+        <Text className="text-text text-center">
           Veuillez vous connecter pour consulter votre historique de commandes.
         </Text>
       </View>
@@ -71,10 +71,7 @@ export default function OrderHistory() {
         <Text className="text-gray-500 italic">Aucune commande trouvée</Text>
       ) : (
         orders.map((order) => (
-          <View
-            key={order.id}
-            className="mb-4 bg-white rounded-lg p-4 shadow"
-          >
+          <View key={order.id} className="mb-4 bg-white rounded-lg p-4 shadow">
             <Text className="font-semibold">Commande</Text>
             <Text>Date : {new Date(order.buyDate).toLocaleDateString()}</Text>
             <Text>Total : {order.totalprice.toFixed(2)} €</Text>

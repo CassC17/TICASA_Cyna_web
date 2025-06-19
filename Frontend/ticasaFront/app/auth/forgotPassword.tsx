@@ -26,7 +26,6 @@ export default function ForgotPasswordScreen() {
       </Text>
 
       <View className="w-full max-w-md">
-        {/* Champ email */}
         <View>
           <Text className="text-base text-white mb-2">Adresse mail</Text>
           <TextInput
@@ -43,7 +42,6 @@ export default function ForgotPasswordScreen() {
           )}
         </View>
 
-        {/* Bouton */}
         <Pressable
           onPress={handleForgotPassword}
           className="w-full bg-cta mt-6 py-3 rounded-lg items-center shadow-md"
