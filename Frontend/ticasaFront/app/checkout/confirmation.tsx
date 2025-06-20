@@ -22,3 +22,6 @@ export default function ConfirmationScreen() {
     </View>
   );
 }
+export const options = {
+  headerShown: false,
+};
