@@ -1,24 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, TextInput, TouchableOpacity } from "react-native";
 import { useRouter, Link } from "expo-router";
 import useUserLogout from "../../hooks/useUserLogout";
-import HoverableView from "../UI/HoverableView";
 import { useCart } from "../../contexts/CartContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Header() {
   const router = useRouter();
   const { logoutUser, loading } = useUserLogout();
   const { toggleCart } = useCart();
   const [isProfileMenuVisible, setIsProfileMenuVisible] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await AsyncStorage.getItem("token");
+      setIsAuthenticated(!!token);
+    };
+    checkToken();
+  }, []);
 
   const handleLogout = async () => {
     await logoutUser();
-    sessionStorage.removeItem("token");
+    await AsyncStorage.removeItem("token");
+    setIsAuthenticated(false);
     router.push("/");
   };
 
+  const handleSearch = async () => {
+    if (searchText.trim() !== "") {
+      router.push(`/search?query=${encodeURIComponent(searchText)}`);
+    }
+  };
+
+  const toggleProfileMenu = () => {
+    setIsProfileMenuVisible((prev) => !prev);
+  };
+
   return (
-    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-primary z-50">
+    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-primary relative z-50">
       <Link href="/">
         <Image
           source={require("../../assets/logo-cyna.webp")}
@@ -28,8 +49,8 @@ export default function Header() {
 
       <TextInput
         placeholder="Rechercher..."
-        placeholderTextColor="#fff"
-        className="flex-1 max-w-[200px] h-10 px-3 rounded-full border border-white bg-primary-dark text-white"
+        placeholderTextColor="#E0E0E0"
+        className="flex-1 max-w-[200px] h-10 px-3 rounded-full border border-white bg-primary-black text-white"
       />
 
       <Link href="categories">
@@ -48,23 +69,7 @@ export default function Header() {
         <Text className="text-white font-bold mx-2">Produits</Text>
       </Link>
 
-      <TouchableOpacity onPress={toggleCart}>
-        <Image
-          source={require("../../assets/basketshop.png")}
-          style={{
-            width: 30,
-            height: 30,
-            resizeMode: "contain",
-            cursor: "pointer",
-          }}
-        />
-      </TouchableOpacity>
-
-      <HoverableView
-        onMouseEnter={() => setIsProfileMenuVisible(true)}
-        onMouseLeave={() => setIsProfileMenuVisible(true)}
-        className="relative"
-      >
+      <TouchableOpacity onPress={toggleProfileMenu}>
         <Image
           source={require("../../assets/user.png")}
           style={{
@@ -74,7 +79,7 @@ export default function Header() {
             cursor: "pointer",
           }}
         />
-      </HoverableView>
+      </TouchableOpacity>
 
       {isProfileMenuVisible && (
         <View className="absolute top-[70px] right-0 w-[180px] bg-primary-dark rounded-lg p-2.5 z-50">
@@ -82,7 +87,7 @@ export default function Header() {
             <Text className="text-white mb-2.5">Inscription</Text>
           </Link>
           <Link href="auth/login">
-            <Text className="text-cta mb-2.5">Connexion</Text>
+            <Text className="text-white mb-2.5">Connexion</Text>
           </Link>
           <Link href="orders/history">
             <Text className="text-white mb-2.5">Mes commandes</Text>
