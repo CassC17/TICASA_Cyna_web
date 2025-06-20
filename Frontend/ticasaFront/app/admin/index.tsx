@@ -5,22 +5,77 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LineChart, BarChart, PieChart } from 'react-native-chart-kit';
 import { getApiUrl } from '../../config';
 
-
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (Platform.OS !== 'web') router.replace('/');
-    AsyncStorage.getItem('token').then(token => {
-      fetch(`${getApiUrl()}/admin/dashboard`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then(r => r.json())
-        .then(setStats);
-    });
+    const init = async () => {
+      if (Platform.OS !== 'web') {
+        router.replace('/');
+        return;
+      }
+
+      const token = await AsyncStorage.getItem('token');
+      if (!token) {
+        setIsAdmin(false);
+        return;
+      }
+
+      try {
+        // Appel uniquement pour vérification admin
+        const res = await fetch(`${getApiUrl()}/admin/dashboard`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (res.status === 200) {
+          setIsAdmin(true);
+
+          // → Ici, on mock les stats localement
+          setStats({
+            dailySales: [
+              { buyDate: new Date(Date.now() - 6 * 86400000), _sum: { totalprice: 120 } },
+              { buyDate: new Date(Date.now() - 5 * 86400000), _sum: { totalprice: 200 } },
+              { buyDate: new Date(Date.now() - 4 * 86400000), _sum: { totalprice: 150 } },
+              { buyDate: new Date(Date.now() - 3 * 86400000), _sum: { totalprice: 300 } },
+              { buyDate: new Date(Date.now() - 2 * 86400000), _sum: { totalprice: 100 } },
+              { buyDate: new Date(Date.now() - 1 * 86400000), _sum: { totalprice: 250 } },
+              { buyDate: new Date(), _sum: { totalprice: 180 } },
+            ],
+            categorySales: [
+              { product: { category: { name: "" } }, _sum: { price: 800 } },
+              { product: { category: { name: "" } }, _sum: { price: 500 } },
+              { product: { category: { name: "" } }, _sum: { price: 300 } },
+            ],
+          });
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (err) {
+        console.error('Erreur lors de la vérification admin :', err);
+        setIsAdmin(false);
+      }
+    };
+
+    init();
   }, []);
 
-  if (!stats) return <Text>Chargement des statistiques...</Text>;
+  if (isAdmin === false) {
+    return (
+      <View className="flex-1 justify-center items-center p-6">
+        <Text className="text-lg text-red-500 font-bold">Vous n'êtes pas administrateur</Text>
+        <Button title="Retour à l'accueil" onPress={() => router.replace('/')} />
+      </View>
+    );
+  }
+
+  if (!stats || isAdmin === null) {
+    return (
+      <View className="flex-1 justify-center items-center p-6">
+        <Text>Chargement des statistiques…</Text>
+      </View>
+    );
+  }
 
   const { dailySales, categorySales } = stats;
 
@@ -87,12 +142,13 @@ export default function AdminDashboard() {
         paddingLeft="15"
         absolute
       />
+
       <View className="mt-8 border-t border-gray-300 pt-6">
-  <Text className="text-xl font-semibold mb-4">Administration</Text>
-  <Button title="→ Gérer les produits SaaS" onPress={() => router.push('/admin/products')} />
-  <View className="mt-2" />
-  <Button title="→ Créer un produit" onPress={() => router.push('/admin/products/create')} />
-</View>
+        <Text className="text-xl font-semibold mb-4">Administration</Text>
+        <Button title="→ Gérer les produits SaaS" onPress={() => router.push('/admin/products')} />
+        <View className="mt-2" />
+        <Button title="→ Créer un produit" onPress={() => router.push('/admin/products/create')} />
+      </View>
     </ScrollView>
   );
 }
@@ -112,5 +168,3 @@ const chartStyle = {
     stroke: '#1e90ff',
   },
 };
-
-
