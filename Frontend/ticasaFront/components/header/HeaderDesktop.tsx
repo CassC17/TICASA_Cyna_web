@@ -99,6 +99,9 @@ export default function Header() {
             </>
           ) : (
             <>
+              <Link href="auth/me">
+                <Text className="text-white mb-2.5">Mon profil</Text>
+              </Link>
               <Link href="orders/history">
                 <Text className="text-white mb-2.5">Mes commandes</Text>
               </Link>
