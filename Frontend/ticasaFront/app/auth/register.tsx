@@ -1,195 +1,181 @@
-import React, { useState } from 'react';
-import { Link } from 'expo-router';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import useUserRegister from '../../hooks/useUserRegister';
+import React, { useState } from "react";
+import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
+import { Link } from "expo-router";
+import useUserRegister from "../../hooks/useUserRegister";
 
 export default function RegisterScreen() {
-    const { registerUser, loading, error, success } = useUserRegister();
+  const { registerUser, loading, error, success } = useUserRegister();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [errors, setErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' });
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-    const handleRegister = () => {
-        let newErrors = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
-
-        if (!firstName.trim()) newErrors.firstName = "Le prénom est requis.";
-        if (!lastName.trim()) newErrors.lastName = "Le nom est requis.";
-        if (!email.trim()) newErrors.email = "L'email est requis.";
-        else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Format d'email invalide.";
-        
-        if (!password.trim()) newErrors.password = "Le mot de passe est requis.";
-        else if (password.length < 8) newErrors.password = "Le mot de passe doit contenir au moins 8 caractères.";
-        else if (!/[A-Z]/.test(password)) newErrors.password = "Le mot de passe doit contenir au moins une majuscule.";
-        else if (!/[a-z]/.test(password)) newErrors.password = "Le mot de passe doit contenir au moins une minuscule.";
-        else if (!/\d/.test(password)) newErrors.password = "Le mot de passe doit contenir au moins un chiffre.";
-        else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) newErrors.password = "Le mot de passe doit contenir au moins un caractère spécial.";
-
-        if (!confirmPassword.trim()) newErrors.confirmPassword = "La confirmation du mot de passe est requise.";
-        else if (password !== confirmPassword) newErrors.confirmPassword = "Les mots de passe ne correspondent pas.";
-
-        setErrors(newErrors);
-
-        if (Object.values(newErrors).every((error) => error === '')) {
-            registerUser(firstName, lastName, email, password);
-        }
+  const handleRegister = () => {
+    const newErrors = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     };
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Inscription</Text>
+    if (!firstName.trim()) newErrors.firstName = "Le prénom est requis.";
+    if (!lastName.trim()) newErrors.lastName = "Le nom est requis.";
+    if (!email.trim()) newErrors.email = "L'email est requis.";
+    else if (!/\S+@\S+\.\S+/.test(email))
+      newErrors.email = "Format d'email invalide.";
 
-            <View>
-                <View style={styles.inputNameContainer}>
-                    <View>
-                        <Text style={styles.label}>Prénom</Text>
-                        <TextInput
-                            style={[styles.input, errors.firstName ? styles.wrongInput : null]}
-                            value={firstName}
-                            onChangeText={setFirstName}
-                        />
-                        {errors.firstName ? <Text style={styles.errorText}>{errors.firstName}</Text> : null}
-                    </View>
+    if (!password.trim()) newErrors.password = "Le mot de passe est requis.";
+    else if (password.length < 8)
+      newErrors.password =
+        "Le mot de passe doit contenir au moins 8 caractères.";
+    else if (!/[A-Z]/.test(password))
+      newErrors.password =
+        "Le mot de passe doit contenir au moins une majuscule.";
+    else if (!/[a-z]/.test(password))
+      newErrors.password =
+        "Le mot de passe doit contenir au moins une minuscule.";
+    else if (!/\d/.test(password))
+      newErrors.password = "Le mot de passe doit contenir au moins un chiffre.";
+    else if (!/[!@#$%^&*(),.?":{}|<>]/.test(password))
+      newErrors.password =
+        "Le mot de passe doit contenir au moins un caractère spécial.";
 
-                    <View>
-                        <Text style={styles.label}>Nom</Text>
-                        <TextInput
-                            style={[styles.input, errors.lastName ? styles.wrongInput : null]}
-                            value={lastName}
-                            onChangeText={setLastName}
-                        />
-                        {errors.lastName ? <Text style={styles.errorText}>{errors.lastName}</Text> : null}
-                    </View>
-                </View>
+    if (!confirmPassword.trim())
+      newErrors.confirmPassword = "La confirmation est requise.";
+    else if (password !== confirmPassword)
+      newErrors.confirmPassword = "Les mots de passe ne correspondent pas.";
 
-                <View>
-                    <Text style={styles.label}>Adresse mail</Text>
-                    <TextInput
-                        style={[styles.input, errors.email ? styles.wrongInput : null]}
-                        value={email}
-                        onChangeText={setEmail}
-                    />
-                    {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
-                </View>
+    setErrors(newErrors);
 
-                <View>
-                    <Text style={styles.label}>Mot de passe</Text>
-                    <TextInput
-                        style={[styles.input, errors.password ? styles.wrongInput : null]}
-                        value={password}
-                        onChangeText={setPassword}
-                        secureTextEntry
-                    />
-                    {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
-                </View>
+    if (Object.values(newErrors).every((e) => e === "")) {
+      registerUser(firstName, lastName, email, password);
+    }
+  };
 
-                <View>
-                    <Text style={styles.label}>Confirmer le mot de passe</Text>
-                    <TextInput
-                        style={[styles.input, errors.confirmPassword ? styles.wrongInput : null]}
-                        value={confirmPassword}
-                        onChangeText={setConfirmPassword}
-                        secureTextEntry
-                    />
-                    {errors.confirmPassword ? <Text style={styles.errorText}>{errors.confirmPassword}</Text> : null}
-                </View>
+  return (
+    <ScrollView className="flex-1 bg-primary bg-p px-5">
+      <View className="w-full max-w-md self-center py-10">
+        <Text className="text-3xl font-bold text-center text-white mb-8 mt-6">
+          Inscription
+        </Text>
 
-                <TouchableOpacity style={styles.button} onPress={handleRegister} disabled={loading}>
-                    <Text style={styles.buttonText}>{loading ? "Chargement..." : "S'inscrire"}</Text>
-                </TouchableOpacity>
+        <View className="flex-row justify-between space-x-4 mb-4">
+          <View className="flex-1 space-y-1">
+            <Text className="text-white mb-2">Prénom</Text>
+            <TextInput
+              className={`h-12 px-4 bg-primary-dark rounded-lg border shadow-sm text-text ${
+                errors.firstName ? "border-red-500 border-2" : "border-gray-300"
+              }`}
+              value={firstName}
+              onChangeText={setFirstName}
+              placeholder="Jean"
+            />
+            {errors.firstName && (
+              <Text className="text-red-500 text-sm">{errors.firstName}</Text>
+            )}
+          </View>
 
-                {error && <Text style={styles.errorText}>{error}</Text>}
-                {success && <Text style={{ color: "green" }}>Inscription réussie !</Text>}
-
-                <View style={styles.loginContainer}>
-                    <Text>Vous avez déjà un compte ?</Text>
-                    <Link href="auth/login"><Text style={styles.loginLink}>Connectez-vous.</Text></Link>
-                </View>
-            </View>
+          <View className="flex-1 space-y-1">
+            <Text className="text-white mb-2">Nom</Text>
+            <TextInput
+              className={`h-12 px-4 bg-primary-dark rounded-lg border shadow-sm text-text ${
+                errors.lastName ? "border-red-500 border-2" : "border-gray-300"
+              }`}
+              value={lastName}
+              onChangeText={setLastName}
+              placeholder="Dupont"
+            />
+            {errors.lastName && (
+              <Text className="text-red-500 text-sm">{errors.lastName}</Text>
+            )}
+          </View>
         </View>
-    );
+
+        <View className="mb-4 space-y-1">
+          <Text className="text-white mb-2">Adresse mail</Text>
+          <TextInput
+            className={`h-12 px-4 bg-primary-dark rounded-lg border shadow-sm text-text ${
+              errors.email ? "border-red-500 border-2" : "border-gray-300"
+            }`}
+            value={email}
+            onChangeText={setEmail}
+            placeholder="exemple@email.com"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          {errors.email && (
+            <Text className="text-red-500 text-sm">{errors.email}</Text>
+          )}
+        </View>
+
+        <View className="mb-4 space-y-1">
+          <Text className="text-white mb-2">Mot de passe</Text>
+          <TextInput
+            className={`h-12 px-4 bg-primary-dark rounded-lg border shadow-sm text-text ${
+              errors.password ? "border-red-500 border-2" : "border-gray-300"
+            }`}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            placeholder="********"
+          />
+          {errors.password && (
+            <Text className="text-red-500 text-sm">{errors.password}</Text>
+          )}
+        </View>
+
+        <View className="mb-4 space-y-1">
+          <Text className="text-white mb-2">Confirmer le mot de passe</Text>
+          <TextInput
+            className={`h-12 px-4 bg-primary-dark rounded-lg border shadow-sm text-text ${
+              errors.confirmPassword
+                ? "border-red-500 border-2"
+                : "border-gray-300"
+            }`}
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry
+            placeholder="********"
+          />
+          {errors.confirmPassword && (
+            <Text className="text-red-500 text-sm">
+              {errors.confirmPassword}
+            </Text>
+          )}
+        </View>
+
+        <Pressable
+          className="bg-cta py-3 rounded-lg items-center shadow-md mt-4"
+          onPress={handleRegister}
+          disabled={loading}
+        >
+          <Text className="text-primary font-bold text-base">
+            {loading ? "Chargement..." : "S'inscrire"}
+          </Text>
+        </Pressable>
+
+        {error && <Text className="text-red-500 mt-4">{error}</Text>}
+        {success && (
+          <Text className="text-green-600 mt-4">Inscription réussie !</Text>
+        )}
+
+        <View className="flex-row justify-center mt-6">
+          <Text className="text-text mb-2">Vous avez déjà un compte ? </Text>
+          <Link href="auth/login">
+            <Text className="text-blue-soft underline">Connectez-vous.</Text>
+          </Link>
+        </View>
+      </View>
+    </ScrollView>
+  );
 }
-
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-        backgroundColor: '#f5f5f5',
-    },
-    inputNameContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    },
-    title: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: '#333',
-        marginBottom: 30,
-    },
-    label: {
-        marginTop: 15,
-        marginBottom: 5,
-        color: '#000',
-        fontSize: 16,
-    },
-    input: {
-        width: '100%',
-        height: 50,
-        borderColor: '#ddd',
-        borderWidth: 1,
-        borderRadius: 10,
-        marginBottom: 5,
-        paddingLeft: 15,
-        fontSize: 16,
-        backgroundColor: '#fff',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2,
-    },
-    wrongInput: {
-        borderColor: '#ff0000',
-        borderWidth: 2,
-    },
-    errorText: {
-        color: '#ff0000',
-        fontSize: 14,
-        alignSelf: 'flex-start',
-        marginBottom: 10,
-    },
-    button: {
-        width: '100%',
-        height: 50,
-        backgroundColor: '#007bff',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 20,
-        borderRadius: 10,
-        shadowColor: '#007bff',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 5,
-        elevation: 3,
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    loginContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 20,
-    },
-    loginLink: {
-        textDecorationLine: 'underline',
-        color: '#007bff',
-    },
-});

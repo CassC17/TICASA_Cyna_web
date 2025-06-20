@@ -13,7 +13,6 @@ export default function Header() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [searchText, setSearchText] = useState("");
 
-
   useEffect(() => {
     const checkToken = async () => {
       const token = await AsyncStorage.getItem("token");
@@ -40,7 +39,7 @@ export default function Header() {
   };
 
   return (
-    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-blue-500 z-50 relative">
+    <View className="flex-row justify-between items-center w-full h-[70px] px-5 bg-primary z-50 relative">
       <Link href="/">
         <Image
           source={require("../../assets/logo-cyna.webp")}
@@ -62,7 +61,6 @@ export default function Header() {
         </TouchableOpacity>
       </View>
 
-
       <Link href="categories">
         <Text className="text-white font-bold mx-2">Catégories</Text>
       </Link>
@@ -82,19 +80,24 @@ export default function Header() {
       <TouchableOpacity onPress={toggleProfileMenu}>
         <Image
           source={require("../../assets/user.png")}
-          style={{ width: 35, height: 35, resizeMode: "contain", cursor: "pointer" }}
+          style={{
+            width: 35,
+            height: 35,
+            resizeMode: "contain",
+            cursor: "pointer",
+          }}
         />
       </TouchableOpacity>
 
       {isProfileMenuVisible && (
-        <View className="absolute top-[70px] right-0 w-[180px] bg-purple-700 rounded-lg p-2.5 z-50">
+        <View className="absolute top-[70px] right-0 w-[180px] bg-primary-dark rounded-lg p-2.5 z-50">
           {!isAuthenticated ? (
             <>
               <Link href="auth/register">
                 <Text className="text-white mb-2.5">Inscription</Text>
               </Link>
               <Link href="auth/login">
-                <Text className="text-white mb-2.5">Connexion</Text>
+                <Text className="text-cta mb-2.5">Connexion</Text>
               </Link>
             </>
           ) : (
@@ -112,6 +115,6 @@ export default function Header() {
           )}
         </View>
       )}
-      </View>
+    </View>
   );
 }
