@@ -77,6 +77,13 @@ export default function Header() {
         <Text className="text-white font-bold mx-2">Produits</Text>
       </Link>
 
+      <TouchableOpacity onPress={toggleCart}>
+        <Image
+          source={require("../../assets/basketshop.png")}
+          style={{ width: 30, height: 30, resizeMode: "contain", cursor: "pointer" }}
+        />
+      </TouchableOpacity>
+
       <TouchableOpacity onPress={toggleProfileMenu}>
         <Image
           source={require("../../assets/user.png")}
