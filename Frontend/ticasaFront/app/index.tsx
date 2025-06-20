@@ -81,16 +81,16 @@ export default function Index() {
         </View>
       )}
 
-      <View className="px-64 mt-8 mb-10 mx-20">
-        <Pressable
-          className="bg-cta p-4 rounded-xl items-center"
-          onPress={() => router.push("/product")}
-        >
-          <Text className="text-primary text-base font-semibold text-center">
-            Voir tous nos services
-          </Text>
-        </Pressable>
-      </View>
+<View className="px-4 mt-8 mb-10 w-full items-center">
+  <Pressable
+    className="bg-cta px-6 py-4 rounded-xl"
+    onPress={() => router.push("/product")}
+  >
+    <Text className="text-primary text-base font-semibold text-center">
+      Voir tous nos services
+    </Text>
+  </Pressable>
+</View>
 
       <Footer />
     </ScrollView>
