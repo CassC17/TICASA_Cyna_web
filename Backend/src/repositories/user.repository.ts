@@ -41,4 +41,41 @@ export class UserRepository {
       data: { isLoggedIn },
     });
   }
+
+  async findById(userId: number): Promise<UserEntity | null> {
+  const user = await prisma.user.findUnique({ where: { id: userId } });
+  if (!user) return null;
+
+  return new UserEntity(
+    user.id,
+    user.nom,
+    user.prenom,
+    user.email,
+    user.password,
+    user.isAdmin,
+    user.isLoggedIn
+  );
+}
+
+async updateUser(
+  userId: number,
+  data: Partial<{ nom: string; prenom: string; email: string; password: string }>
+): Promise<UserEntity> {
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data,
+  });
+
+  return new UserEntity(
+    user.id,
+    user.nom,
+    user.prenom,
+    user.email,
+    user.password,
+    user.isAdmin,
+    user.isLoggedIn
+  );
+}
+
+
 }

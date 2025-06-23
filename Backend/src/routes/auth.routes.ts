@@ -1,5 +1,5 @@
 import express from "express";
-import { login, register, logout } from "../controllers/auth.controller";
+import { login, register, logout, getUserById, updateUser, getConnectedUser, updateConnectedUser} from "../controllers/auth.controller";
 import { authenticate } from "../middleware/auth.middleware";
 
 const router = express.Router();
@@ -39,6 +39,12 @@ const router = express.Router();
  */
 router.post("/register", register);
 
+router.get("/me", authenticate, getConnectedUser);
+
+router.put("/me", authenticate, updateConnectedUser);
+
+router.put("/user/:id", updateUser);
+
 /**
  * @swagger
  * /auth/login:
@@ -67,6 +73,9 @@ router.post("/register", register);
  *         description: Email ou mot de passe incorrect
  */
 router.post("/login", login);
+
+
+router.get("/user/:id", getUserById);
 
 /**
  * @swagger

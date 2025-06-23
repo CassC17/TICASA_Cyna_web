@@ -15,24 +15,30 @@ model User {
   password   String      @db.VarChar(255)
   isAdmin    Boolean    @default(false)
   isLoggedIn Boolean    @default(false)
-  basket     Basket[]
   userInfo   UserInfo[]
+  order      Order[]
+  activeSubscription ActiveSubscription[]
 }
 
-model Basket {
-  id             Int      @id @default(autoincrement())
-  userId         Int
-  basketItemId   Int?
-  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "basket_ibfk_1")
-  basketItem     BasketItem? @relation(fields: [basketItemId], references: [id], onDelete: Cascade, map: "basket_ibfk_2")
+model Order {
+  id         Int         @id @default(autoincrement())
+  userId     Int
+  totalprice      Float
+  delivered  Int        @default(0)
+  buyDate    DateTime    @default(now())
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[] 
 }
 
-model BasketItem {
+model OrderItem {
   id            Int      @id @default(autoincrement())
+  orderId       Int
   productId     Int?
   productPrice  Float?   @db.Float
-  basket        Basket[]
-  product       Product? @relation(fields: [productId], references: [id], onDelete: Cascade, map: "basket_item_ibfk_1")
+  productQty    Int      @default(1)
+  price         Float    @db.Float
+  order         Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product       Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Product {
@@ -42,18 +48,21 @@ model Product {
   fournisseur        String             @db.VarChar(255)
   activePromoId      Int?
   categoryId         Int
-  description        String             @db.VarChar(255) @default("placeholder")
+  description        String             @db.VarChar(255)
   image              String             @db.VarChar(255) @default("placeholder")
-  basketItem         BasketItem[]
+  disponibility      Boolean            @default(true)
+  orderItem         OrderItem[]
   promotions         Promotion?          @relation(fields: [activePromoId], references: [id], onDelete: Cascade, map: "product_ibfk_1")
   category           ProductCategory     @relation(fields: [categoryId], references: [id], onDelete: Cascade, map: "product_ibfk_2")
   promotedProducts   PromotedProduct[]
+  activeSubscription ActiveSubscription[]
 }
 
 model ProductCategory {
   id          Int       @id @default(autoincrement())
   name        String   @db.VarChar(191)
   description String   @db.VarChar(255)
+  image       String   @db.VarChar(255) @default("placeholder")
   products    Product[]
 }
 
@@ -77,6 +86,16 @@ model UserInfo {
   userId       Int?
   paymentMean  String? @db.VarChar(255)
   paymentNum   String? @db.VarChar(255)
-  paymentDate  String? @db.VarChar(255)
+  paymentDate  DateTime?    @default(now())
   user         User?   @relation(fields: [userId], references: [id], onDelete: Cascade, map: "user_info_ibfk_1")
+}
+
+model ActiveSubscription {
+  id         Int     @id @default(autoincrement())
+  userId     Int
+  productId  Int
+  startDate  DateTime    @default(now())
+  endDate    DateTime    @default(now())
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade, map: "active_subscription_ibfk_1")
+  product    Product @relation(fields: [productId], references: [id], onDelete: Cascade, map: "active_subscription_ibfk_2")
 }

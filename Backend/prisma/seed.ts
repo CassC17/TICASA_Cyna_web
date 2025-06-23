@@ -2,145 +2,127 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+await prisma.activeSubscription.deleteMany();
+await prisma.userInfo.deleteMany();
+await prisma.promotion.deleteMany();
+await prisma.product.deleteMany();
+await prisma.productCategory.deleteMany();
+await prisma.user.deleteMany();
+
 async function main() {
-    // Create some users
-    const user1 = await prisma.user.create({
+    // <-----  Catégories de produits  ----->
+    const soc = await prisma.productCategory.create({
         data: {
-            nom: 'Doe',
-            prenom: 'John',
-            email: 'john.doe@example.com',
-            password: 'password123',
-            isAdmin: true,
-            isLoggedIn: false,
+            name: "SOC (Security Operations Center)",
+            description: "Supervision centralisée des événements de sécurité. Surveillance 24/7, analyse de logs, détection d'incidents.",
+            image: "cynaSOC.png",
         },
     });
 
-    const user2 = await prisma.user.create({
+    const edr = await prisma.productCategory.create({
         data: {
-            nom: 'Smith',
-            prenom: 'Jane',
-            email: 'jane.smith@example.com',
-            password: 'password123',
-            isAdmin: false,
-            isLoggedIn: false,
+            name: "EDR (Endpoint Detection & Response)",
+            description: "Protection avancée des terminaux contre les menaces. Analyse comportementale, remédiation automatique.",
+            image: "cynaSOC.png",
         },
     });
 
-    // Create some product categories
-    const category1 = await prisma.productCategory.create({
+    const xdr = await prisma.productCategory.create({
         data: {
-            name: 'Electronics',
-            description: 'Electronic devices and gadgets',
+            name: "XDR (Extended Detection & Response)",
+            description: "Sécurité intégrée multi-canal (endpoint, réseau, cloud). Détection intelligente, réponse automatisée.",
+            image: "cynaSOC.png",
         },
     });
 
-    const category2 = await prisma.productCategory.create({
-        data: {
-            name: 'Books',
-            description: 'Various kinds of books',
-        },
-    });
+  // <-----  Produits  ----->
+  const cynaSoc = await prisma.product.create({
+    data: {
+      name: "Cyna SOC",
+      image: "cynaSOC.png",
+      description : "Service de supervision continue des événements de sécurité. Centralise les logs et détecte les anomalies en temps réel.",
+      // features : ["Surveillance 24/7", "Corrélation d'événements", "Tableaux de bord personnalisés", "Intégration avec SIEM"],
+      // annualyPrice : 3200,
+      price: 299,
+      fournisseur: "Cyna",
+      categoryId: soc.id,
+    },
+  });
 
-    // Create some products
-    const product1 = await prisma.product.create({
-        data: {
-            name: 'Smartphone',
-            price: 699.99,
-            fournisseur: 'TechCorp',
-            categoryId: category1.id,
-        },
-    });
+  const cynaEdr = await prisma.product.create({
+    data: {
+      name: "Cyna EDR",
+      image: "cynaEDR.png",
+      description : "Endpoint Detection & Response. Protège les postes de travail contre les menaces avancées avec des réponses automatisées.",
+      // features : ["Analyse comportementale", "Remédiation automatique", "Journalisation détaillée", "Compatible Windows, macOS, Linux"],
+      // annualyPrice : 2100,
+      price: 199,
+      fournisseur: "Cyna",
+      categoryId: edr.id,
+    },
+  });
 
-    const product2 = await prisma.product.create({
-        data: {
-            name: 'Laptop',
-            price: 1299.99,
-            fournisseur: 'CompuWorld',
-            categoryId: category1.id,
-        },
-    });
+  const cynaXdr = await prisma.product.create({
+    data: {
+      name: "Cyna XDR",
+      // image,
+      description : "Extended Detection & Response. Fusionne données réseau, endpoint et cloud pour une détection globale des menaces.",
+      // features : ["Corrélation multi-sources (EDR, réseau, cloud)", "Réponse coordonnée", "API d'intégration", "Support 24/7 avec SLA"],
+      // annualyPrice : 4200,
+      price: 399,
+      fournisseur: "Cyna",
+      categoryId: xdr.id,
+    },
+  });
 
-    const product3 = await prisma.product.create({
-        data: {
-            name: 'Novel',
-            price: 19.99,
-            fournisseur: 'BookHouse',
-            categoryId: category2.id,
-        },
-    });
+  const cynaCloudProtect = await prisma.product.create({
+    data: {
+      name: "Cyna Cloud Protect",
+      // image,
+      description : "Sécurisation des environnements cloud AWS, Azure, GCP. Détection d'anomalies, configuration sécurisée, conformité.",
+      // features : ["Sécurisation de configuration en continu", "Détection d'accès non autorisés", "Rapports de conformité (ISO, SOC 2, etc.)"],
+      // annualyPrice : 2600,
+      price: 249,
+      fournisseur: "Cyna",
+      categoryId: xdr.id,
+    },
+  });
 
-    // Create some promotions
-    const promotion1 = await prisma.promotion.create({
-        data: {
-            name: 'Summer Sale',
-            priceReduction: 10,
-        },
-    });
+  const cynaVulnerabilityManager = await prisma.product.create({
+    data: {
+      name: "Cyna Vulnerability Manager",
+      // image,
+      description : "Analyse continue des vulnérabilités sur l’ensemble des terminaux et serveurs avec priorisation des menaces.",
+      // features : ["Scans automatiques programmés", "Base de vulnérabilités CVE à jour", "Dashboard de criticité"],
+      // monthlyPrice : 1900,
+      price: 179,
+      fournisseur: "Cyna",
+      categoryId: xdr.id,
+    },
+  });
 
-    // Assign promotion to a product
-    await prisma.product.update({
-        where: { id: product1.id },
-        data: { activePromoId: promotion1.id },
-    });
+  // <-----  Promotions  ----->
+  const promo = await prisma.promotion.create({
+    data: {
+      name: 'Summer Sale',
+      priceReduction: 15,
+    },
+  });
 
-    // Create some basket items
-    const basketItem1 = await prisma.basketItem.create({
-        data: {
-            productId: product1.id,
-            productPrice: product1.price,
-        },
-    });
+  // Assign promotion to a product
+  await prisma.product.update({
+      where: { id: cynaSoc.id },
+      data: { activePromoId: promo.id },
+  });
 
-    const basketItem2 = await prisma.basketItem.create({
-        data: {
-            productId: product2.id,
-            productPrice: product2.price,
-        },
-    });
-
-    // Create baskets for users
-    await prisma.basket.create({
-        data: {
-            userId: user1.id,
-            basketItemId: basketItem1.id,
-        },
-    });
-
-    await prisma.basket.create({
-        data: {
-            userId: user2.id,
-            basketItemId: basketItem2.id,
-        },
-    });
-
-    // Create user info
-    await prisma.userInfo.create({
-        data: {
-            userId: user1.id,
-            paymentMean: 'Credit Card',
-            paymentNum: '1234-5678-9012-3456',
-            paymentDate: '12/23',
-        },
-    });
-
-    await prisma.userInfo.create({
-        data: {
-            userId: user2.id,
-            paymentMean: 'PayPal',
-            paymentNum: 'jane.smith@paypal.com',
-            paymentDate: 'N/A',
-        },
-    });
+  console.log('Seeding completed successfully.');
 }
 
 main()
-    .catch((e) => {
-        console.error(e);
-        globalThis.process.exit(1);
-    })
-    .finally(async () => {
-        await prisma.$disconnect();
-    });
-
-
-    
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
